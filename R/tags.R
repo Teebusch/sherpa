@@ -1,3 +1,28 @@
+#' The Sherpa Tag Proxy
+#'
+#' An environment containing wrappers for all shiny::tags.
+#' These wrappers automatically handle sherpa attribute helpers
+#' (like [x_data()], [x_on()], ...) without the need for the
+#' [rlang::splice-operator] `!!!`.
+#'
+#' @details
+#' The sherpa attribute helpers all return a named list with
+#' a single Element. By default, [shiny::tags] will treat these named
+#' lists as regular tag content instead of HTML-Attributes (which we want).
+#'
+#' There are 3 ways to make [shiny::tags] treat the sherpa attribute helpers
+#' as HTML-attributes:
+#'
+#' - `splice` them into the function call using [rlang::splice-operator] `!!!`
+#' - add them using [`%s%`], a wrapper for [shiny::tagAppendAttributes]
+#'   that automatically splices sherpa attribute helpers
+#' - using this "tag proxy". It proxies the `shiny::tags`-Object but adds
+#'   automatic splicing for sherpa attribute helpers.
+#'
+#' @name tag-proxy
+NULL
+
+
 #' Process sherpa attributes for HTML-Tags
 #' @description
 #' Looks for unnamed arguments of class 'sherpa_attr' and
@@ -49,29 +74,8 @@ create_tag_proxy <- function() {
 }
 
 
-#' The Sherpa Tag Proxy
-#'
-#' An environment containing wrappers for all shiny::tags.
-#' These wrappers automatically handle sherpa attribute helpers
-#' (like [x_data()], [x_on()], ...) without the need for the
-#' [rlang::`!!!`] operator.
-#'
-#' @details
-#' The sherpa attribute helpers all return a named list with
-#' a single Element. By default, [shiny::tags] will treat these named
-#' lists as regular tag content instead of HTML-Attributes (which we want).
-#'
-#' There are 3 ways to make [shiny::tags] treat the sherpa attribute helpers
-#' as HTML-attributes:
-#'
-#' - `splice` them into the function call using [rlang::`!!!`]
-#' - add them using [`%s%`], a wrapper for [shiny::tagAppendAttributes]
-#'   that automatically splices sherpa attribute helpers
-#' - using this "tag proxy". It proxies the `shiny::tags`-Object but adds
-#'   automatic splicing for sherpa attribute helpers.
-#'
+#' @rdname tag-proxy
 #' @export
-#' @usage s$div(...)
 s <- create_tag_proxy()
 
 

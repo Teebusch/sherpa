@@ -6,7 +6,9 @@
 AlpineStore <- R6::R6Class(
   "AlpineStore",
   public = list(
+    #' @field id The store's ID (will be the same in the Client)
     id = NULL,
+    #' @field session The Shiny session
     session = NULL,
 
     #' @description Initialize a new Alpine Store

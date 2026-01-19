@@ -8,6 +8,15 @@
 \description{
 What the package does (one paragraph).
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/Teebusch/sherpa}
+  \item \url{https://teebusch.github.io/sherpa/}
+  \item Report bugs at \url{https://github.com/Teebusch/sherpa/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Tobias Busch
 

@@ -11,6 +11,15 @@ Alpine.js Store Manager
 \details{
 This class manages a synchronized state between R and an Alpine.js store.
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{id}}{The store's ID (will be the same in the Client)}
+
+\item{\code{session}}{The Shiny session}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
