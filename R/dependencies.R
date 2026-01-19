@@ -34,7 +34,7 @@ create_register_stores_script <- function(stores) {
   }
   registry <- paste0(sprintf("Alpine.store('%s', {});", stores), collapse = " ")
 
-  tags$script(HTML(
+  tags$script(htmltools::HTML(
     sprintf("document.addEventListener('alpine:init', () => { %s })", registry)
   ))
 }

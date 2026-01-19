@@ -18,7 +18,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Tobias Busch
+\strong{Maintainer}: Tobias Busch \email{teebusch@gmail.com}
 
 }
 \keyword{internal}
