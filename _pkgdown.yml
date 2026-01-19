@@ -1,4 +1,18 @@
 url: https://teebusch.github.io/sherpa/
 template:
   bootstrap: 5
-
+reference:
+- title: Setup
+  desc: Use Alpine in your App
+  contents:
+  - use_alpine
+- title: Alpine Store Synchronisation
+  desc: synchronise data between Shiny and Alpine.js in the client
+  contents:
+  - AlpineStore
+- title: Alpine Directive Helpers
+  desc: Add alpine directive attributes to HTML-Tags
+  contents:
+  - s
+  - "`%s%`"
+  - starts_with("x")

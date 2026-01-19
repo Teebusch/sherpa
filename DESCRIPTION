@@ -1,9 +1,10 @@
 Package: sherpa
-Title: What the Package Does (One Line, Title Case)
+Title: A lightweight bridge between R Shiny and Alpine.js
 Version: 0.0.0.9000
 Authors@R: 
     person("Tobias", "Busch", role = c("aut", "cre"), email="teebusch@gmail.com")
-Description: What the package does (one paragraph).
+Description: Sherpa allows you to build highly reactive user interfaces by handling 
+  state and transitions in the browser while keeping your business logic in R.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8

@@ -1,5 +1,5 @@
 
-# sherpa
+# sherpa <img src="man/figures/logo.png" align="right" height="139"/>
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
@@ -9,15 +9,15 @@
 
 ## Key Features
 
-- The `s$` Proxy: A "Sherpa-aware" version of `shiny::tags` that automatically handles Alpine attributes without the need for the `!!!` (unquote-splice) operator.
+- ✅ The `s$` Proxy: A "Sherpa-aware" version of `shiny::tags` that automatically handles Alpine attributes without the need for the `!!!` (unquote-splice) operator.
 
-- R-Native Directives: All core Alpine.js directives (`x-data`, `x-model`, `x-for`, etc.) available as standard R functions.
+- ✅ R-Native Directives: All core Alpine.js directives (`x-data`, `x-model`, `x-for`, etc.) available as standard R functions with support for modifiers and  optional arguments.
 
-- TODO: AlpineStore (R6): Seamlessly sync server-side R reactive values to Alpine.js global stores.
+- ✅ AlpineStore (R6): Seamlessly sync server-side R reactive values to Alpine.js global stores.
 
-- TODO: Auto-Binding: Automatically handles Shiny input/output binding for dynamically generated Alpine content.
+- 📋 TODO: Auto-Binding: Automatically handles Shiny input/output binding for dynamically generated Alpine content.
 
-- TODO: Supports Alpine.js Plugins, with special accomodations for Alpine AJAX
+- 📋 TODO: Supports Alpine.js Plugins, with special accomodations for Alpine AJAX
 
 ## Installation
 
@@ -29,9 +29,9 @@ devtools::install_github("teebusch/sherpa")
 
 ## Quick Start
 
-### 1. Simple Counter (Pure Frontend)
+### A Simple Counter (Pure Frontend)
 
-Use the `s$` proxy to inject Alpine logic directly into your UI.
+Use the `s$` proxy for Shiny-Tags to easily inject Alpine logic into your Shiny-UI.
 
 ```r
 library(shiny)
@@ -51,7 +51,7 @@ server <- function(input, output, session) {}
 shinyApp(ui, server)
 ```
 
-### 2. Server-Synced State (AlpineStore)
+### Server-Synced State (via AlpineStore)
 
 ```r
 ui <- fluidPage(
@@ -66,11 +66,9 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-  # Initialize Store
   app_state <- AlpineStore$new("status")
   app_state$init(list(label = "Pending", connected = FALSE, message = "Waiting..."))
   
-  # Update from R
   observe({
     invalidateLater(2000)
     app_state$update("label", "Live")
@@ -88,24 +86,27 @@ server <- function(input, output, session) {
 
 - Declare Stores: Pass your store names to use_alpine(stores = c("myStore")) to prevent "undefined" errors during page load.
 
-## Available Helpers
+## Available Directive Helpers
 
 | R Helper         | Alpine directive | What it does                                                  |
 |------------------|------------------|---------------------------------------------------------------|
 | `x_data()`       | `x-data`         | Defines a component and its reactive data.                    |
-| `x_model()`      | `x-model`        | Creates two-way data binding on input elements.               |
-| `x_transition()` | `x-transition`   | Applies smooth CSS transitions for entries and exits.         |
-| `x_text()`       | `x-text`         | Updates the inner text of an element dynamically.             |
-| `x_show()`       | `x-show`         | Toggles visibility via CSS (display: none).                   |
-| `x_on()`         | `x-on`           | Listens for browser events (shortcut: `x_click`, `x_change`). |
 | `x_bind()`       | `x-bind`         | Dynamically binds HTML attributes (e.g. class, disabled).     |
-| `x_if()`         | `x-if`           | Conditionally adds/removes elements (must use `<template>`).  |
-| `x_for()`        | `x-for`          | Loops over data to create elements (must use `<template>`).   |
-| `x_init()`       | `x-init`         | Runs JavaScript code when the element is initialized.         |
-| `x_cloak()`      | `x-cloak`        | Hides elements until Alpine has finished loading.             |
+| `x_on()`         | `x-on`           | Listens for browser events (shortcut: `x_click`, `x_change`). |
+| `x_text()`       | `x-text`         | Updates the inner text of an element dynamically.             |
 | `x_html()`       | `x-html`         | Updates the inner HTML of an element (use with caution).      |
+| `x_model()`      | `x-model`        | Creates two-way data binding on input elements.               |
+| `x_show()`       | `x-show`         | Toggles visibility via CSS (display: none).                   |
+| `x_transition()` | `x-transition`   | Applies smooth CSS transitions for entries and exits.         |
+| `x_for()`        | `x-for`          | Loops over data to create elements (must use `<template>`).   |
+| `x_if()`         | `x-if`           | Conditionally adds/removes elements (must use `<template>`).  |
+| `x_init()`       | `x-init`         | Runs JavaScript code when the element is initialized.         |
+| `x_effect()`     | `x-effect`       | Runs a script when a reactive dependency changes.             |
 | `x_ref()`        | `x-ref`          | Utility for accessing DOM-Elements directly.                  |
+| `x_cloak()`      | `x-cloak`        | Hides elements until Alpine has finished loading.             |
+| `x_ignore `      | `x-cloak`        | Lets Alpine ignore an element.                                |
+| `x_modelable()`  | `x-modelable`    | Expose Alpine properties as the target of x-model.            |
 
-Attribute missing? Use `x_attr_builder()` to create your own.
+Directive missing? Use `x_attr_builder()` to create your own.
 
-See the [Alpine Docs for more details](https://alpinejs.dev/directives/)
+See the [Alpine Docs for more details](https://alpinejs.dev/directives/) 
