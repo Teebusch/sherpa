@@ -1,15 +1,27 @@
 # Package index
 
-## All functions
+## Setup
+
+Use Alpine in your App
+
+- [`use_alpine()`](https://teebusch.github.io/sherpa/reference/use_alpine.md)
+  : Activate Alpine.js and plugins in Shiny app
+
+## Alpine Store Synchronisation
+
+synchronise data between Shiny and Alpine.js in the client
 
 - [`AlpineStore`](https://teebusch.github.io/sherpa/reference/AlpineStore.md)
   : Alpine.js Store Manager
-- [`` `%s%` ``](https://teebusch.github.io/sherpa/reference/sherpa_operator.md)
-  : Sherpa Attribute Operator
+
+## Alpine Directive Helpers
+
+Add alpine directive attributes to HTML-Tags
+
 - [`s`](https://teebusch.github.io/sherpa/reference/tag-proxy.md) : The
   Sherpa Tag Proxy
-- [`use_alpine()`](https://teebusch.github.io/sherpa/reference/use_alpine.md)
-  : Activate Alpine.js and plugins in Shiny app
+- [`` `%s%` ``](https://teebusch.github.io/sherpa/reference/sherpa_operator.md)
+  : Sherpa Attribute Operator
 - [`x_attr_builder()`](https://teebusch.github.io/sherpa/reference/x_attr_builder.md)
   : Helper to construct Alpine.js attributes
 - [`x_bind()`](https://teebusch.github.io/sherpa/reference/x_bind.md) :
