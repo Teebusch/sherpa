@@ -41,7 +41,7 @@ devtools::install_github("teebusch/sherpa")
 
 ## Quick Start
 
-### A Simple Counter (Pure Frontend)
+### A Simple Counter (Pure Frontend, no Store)
 
 Use the `s$` proxy for Shiny-Tags to easily inject Alpine directives
 into your Shiny-UI.
@@ -67,28 +67,40 @@ shinyApp(ui, server)
 ### Server-Synced State (via AlpineStore)
 
 ``` r
+library(shiny)
+library(sherpa)
+
 ui <- fluidPage(
-  use_alpine(stores = "status"),
+  use_alpine(stores = "appState"),
   s$div(
-    s$h3("Server Status: ", s$span(x_text("$store.status.label"))),
+    x_data(),
+    s$h3("Server Status: ", s$span(x_text("$store.appState.label"))),
     s$div(
-      x_bind("class", "$store.status.connected ? 'text-success' : 'text-danger'"),
-      x_text("$store.status.message")
+      x_bind("class", "$store.appState.connected ? 'text-success' : 'text-danger'"),
+      x_text("$store.appState.message")
     )
   )
 )
 
 server <- function(input, output, session) {
-  app_state <- AlpineStore$new("status")
-  app_state$init(list(label = "Pending", connected = FALSE, message = "Waiting..."))
+  app_state <- AlpineStore$new(
+    "appState",
+    data = list(
+      label = "Pending", 
+      connected = FALSE, 
+      message = "Waiting..."
+    )
+  )
   
   observe({
     invalidateLater(2000)
-    app_state$update("label", "Live")
-    app_state$update("connected", TRUE)
-    app_state$update("message", paste("Last sync:", Sys.time()))
+    app_state$data$label <- "Live"
+    app_state$data$connected <- TRUE
+    app_state$data$message <- paste("Last sync:", Sys.time())
   })
 }
+
+shinyApp(ui, server)
 ```
 
 ## The “Way of the Sherpa” (Rules of Engagement)
