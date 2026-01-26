@@ -3,6 +3,7 @@
 #' Add this anywhere in your UI. Shiny will take care of hoisting it into your HTML page's `<head>`.
 #'
 #' @param plugins Character vector with Alpine plugin names (e.g. c("persist", "mask", "intersect")).
+#' @param stores Character vector of names of stores that will be used. Must be initialized here.
 #'
 #' @return A `htmltools::tagList` with the dependencies as [htmltools::htmlDependency].
 #' @export
@@ -32,10 +33,17 @@ create_register_stores_script <- function(stores) {
   if (is.null(stores)) {
     return(NULL)
   }
-  registry <- paste0(sprintf("Alpine.store('%s', {});", stores), collapse = " ")
+  registry <- paste0(
+    sprintf("Alpine.store('%s', {test: 123});", stores),
+    sprintf("console.log('%s');", stores),
+    collapse = " "
+  )
 
   tags$script(htmltools::HTML(
-    sprintf("document.addEventListener('alpine:init', () => { %s })", registry)
+    sprintf(
+      "document.addEventListener('alpine:init', () => { %s })",
+      registry
+    )
   ))
 }
 

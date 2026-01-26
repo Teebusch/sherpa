@@ -8,6 +8,8 @@ use_alpine(plugins = NULL, stores = NULL)
 }
 \arguments{
 \item{plugins}{Character vector with Alpine plugin names (e.g. c("persist", "mask", "intersect")).}
+
+\item{stores}{Character vector of names of stores that will be used. Must be initialized here.}
 }
 \value{
 A \code{htmltools::tagList} with the dependencies as \link[htmltools:htmlDependency]{htmltools::htmlDependency}.

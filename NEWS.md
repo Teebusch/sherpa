@@ -1,4 +1,4 @@
-# sherpa (development version)
+# Development Version
 
 * Load HTML dependencies for Alpine from CDN
 * Add helpers for Alpine directives within tags

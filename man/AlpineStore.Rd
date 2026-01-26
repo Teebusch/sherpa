@@ -4,19 +4,13 @@
 \alias{AlpineStore}
 \title{Alpine.js Store Manager}
 \description{
-Alpine.js Store Manager
-
-Alpine.js Store Manager
-}
-\details{
-This class manages a synchronized state between R and an Alpine.js store.
+Manages a synchronized state between R and an Alpine.js store.
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{id}}{The store's ID (will be the same in the Client)}
-
-\item{\code{session}}{The Shiny session}
+\item{\code{data}}{Holds the values available in the store. Read and write like \code{reactiveValues()}
+Initialize Instance}
 }
 \if{html}{\out{</div>}}
 }
@@ -24,9 +18,6 @@ This class manages a synchronized state between R and an Alpine.js store.
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-AlpineStore-new}{\code{AlpineStore$new()}}
-\item \href{#method-AlpineStore-sync}{\code{AlpineStore$sync()}}
-\item \href{#method-AlpineStore-update}{\code{AlpineStore$update()}}
-\item \href{#method-AlpineStore-init}{\code{AlpineStore$init()}}
 \item \href{#method-AlpineStore-clone}{\code{AlpineStore$clone()}}
 }
 }
@@ -34,9 +25,8 @@ This class manages a synchronized state between R and an Alpine.js store.
 \if{html}{\out{<a id="method-AlpineStore-new"></a>}}
 \if{latex}{\out{\hypertarget{method-AlpineStore-new}{}}}
 \subsection{Method \code{new()}}{
-Initialize a new Alpine Store
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AlpineStore$new(id, session = shiny::getDefaultReactiveDomain())}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{AlpineStore$new(id, session = shiny::getDefaultReactiveDomain(), data = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -45,61 +35,8 @@ Initialize a new Alpine Store
 \item{\code{id}}{Unique identifier for the store (used in $store.id)}
 
 \item{\code{session}}{The Shiny session object}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-AlpineStore-sync"></a>}}
-\if{latex}{\out{\hypertarget{method-AlpineStore-sync}{}}}
-\subsection{Method \code{sync()}}{
-Bind a reactive expression to a store property
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AlpineStore$sync(name, reactive_expr)}\if{html}{\out{</div>}}
-}
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{name}}{The name of the property in the Alpine store}
-
-\item{\code{reactive_expr}}{A reactive expression or a value}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-AlpineStore-update"></a>}}
-\if{latex}{\out{\hypertarget{method-AlpineStore-update}{}}}
-\subsection{Method \code{update()}}{
-Send a direct update to the store
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AlpineStore$update(name, value)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{name}}{Property name}
-
-\item{\code{value}}{The value to send (will be converted to JSON)}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-AlpineStore-init"></a>}}
-\if{latex}{\out{\hypertarget{method-AlpineStore-init}{}}}
-\subsection{Method \code{init()}}{
-Initialize the store with a full set of data
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AlpineStore$init(data = list())}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data}}{A named list of initial values}
+\item{\code{data}}{Named list with keys and values to populate store on initialisation}
 }
 \if{html}{\out{</div>}}
 }

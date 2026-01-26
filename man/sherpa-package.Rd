@@ -4,9 +4,11 @@
 \name{sherpa-package}
 \alias{sherpa}
 \alias{sherpa-package}
-\title{sherpa: What the Package Does (One Line, Title Case)}
+\title{sherpa: A lightweight bridge between R Shiny and Alpine.js}
 \description{
-What the package does (one paragraph).
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
+Sherpa allows you to build highly reactive user interfaces by handling state and transitions in the browser while keeping your business logic in R.
 }
 \seealso{
 Useful links:

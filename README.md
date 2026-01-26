@@ -5,23 +5,27 @@
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-**sherpa** is a lightweight bridge between **R Shiny** and **Alpine.js**. It allows you to build highly reactive user interfaces by handling state and transitions in the browser while keeping your business logic in R.
+**sherpa** carries your data between **R Shiny** and **Alpine.js**. It lets you build highly reactive user interfaces by synchronizing reactive values between a Shiny backend and an Alpine.js Frontend. This lets you handle UI-state and transitions in the browser while keeping your business logic in R.
 
 ## Key Features
 
-- ✅ The `s$` Proxy: A "Sherpa-aware" version of `shiny::tags` that automatically handles Alpine attributes without the need for the `!!!` (unquote-splice) operator.
+- ✅ `s$`: A "Sherpa-aware" version of `shiny::tags` that automatically handles Alpine attributes without the need for lots of backticks or the `!!!` splice-operator.
 
-- ✅ R-Native Directives: All core Alpine.js directives (`x-data`, `x-model`, `x-for`, etc.) available as standard R functions with support for modifiers and  optional arguments.
+- ✅ R-Native Directives: All core Alpine.js directives (`x-data`, `x-model`, `x-for`, etc.) available as standard R functions with support for modifiers and optional arguments.
 
-- ✅ AlpineStore (R6): Seamlessly sync server-side R reactive values to Alpine.js global stores.
+- ✅ AlpineStore (R6): Sync server-side R reactive values to Alpine.js global stores.
+
+- ✅ Sync changes in Alpine Store back to Shiny server as reactive values.
 
 - 📋 TODO: Auto-Binding: Automatically handles Shiny input/output binding for dynamically generated Alpine content.
 
 - 📋 TODO: Supports Alpine.js Plugins, with special accomodations for Alpine AJAX
 
+- 📋 TODO: Examples of Sherpa in use
+
 ## Installation
 
-You can install the development version of sherpa like so:
+You can install the development version of sherpa like this:
 
 ``` r
 devtools::install_github("teebusch/sherpa")
@@ -31,7 +35,7 @@ devtools::install_github("teebusch/sherpa")
 
 ### A Simple Counter (Pure Frontend)
 
-Use the `s$` proxy for Shiny-Tags to easily inject Alpine logic into your Shiny-UI.
+Use the `s$` proxy for Shiny-Tags to easily inject Alpine directives into your Shiny-UI.
 
 ```r
 library(shiny)
@@ -80,7 +84,7 @@ server <- function(input, output, session) {
 
 ## The "Way of the Sherpa" (Rules of Engagement)
 
-- Use the Proxy: Always use s$tag_name() (e.g., s$div()) instead of tags$div() when you want to pass x_ helpers.
+- Use the Proxy: Use s$tag_name() (e.g., s$div()) instead of tags$div() when you want to pass x_ helpers. Or, if you prefer, use the Sherpa operator `%s%`
 
 - No Bangs: Because of the `s$` proxy, you do not need the `!!!` operator. Just pass the helper: `s$div(x_data(NA))`.
 
