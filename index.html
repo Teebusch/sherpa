@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="index.html">sherpa</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,22 +59,24 @@
 </div>
 <!-- badges: start -->
 
-<p><strong>sherpa</strong> is a lightweight bridge between <strong>R Shiny</strong> and <strong>Alpine.js</strong>. It allows you to build highly reactive user interfaces by handling state and transitions in the browser while keeping your business logic in R.</p>
+<p><strong>sherpa</strong> carries your data between <strong>R Shiny</strong> and <strong>Alpine.js</strong>. It lets you build highly reactive user interfaces by synchronizing reactive values between a Shiny backend and an Alpine.js Frontend. This lets you handle UI-state and transitions in the browser while keeping your business logic in R.</p>
 <div class="section level2">
 <h2 id="key-features">Key Features<a class="anchor" aria-label="anchor" href="#key-features"></a>
 </h2>
 <ul>
-<li><p>✅ The <code>s$</code> Proxy: A “Sherpa-aware” version of <code><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">shiny::tags</a></code> that automatically handles Alpine attributes without the need for the <code>!!!</code> (unquote-splice) operator.</p></li>
+<li><p>✅ <code>s$</code>: A “Sherpa-aware” version of <code><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">shiny::tags</a></code> that automatically handles Alpine attributes without the need for lots of backticks or the <code>!!!</code> splice-operator.</p></li>
 <li><p>✅ R-Native Directives: All core Alpine.js directives (<code>x-data</code>, <code>x-model</code>, <code>x-for</code>, etc.) available as standard R functions with support for modifiers and optional arguments.</p></li>
-<li><p>✅ AlpineStore (R6): Seamlessly sync server-side R reactive values to Alpine.js global stores.</p></li>
+<li><p>✅ AlpineStore (R6): Sync server-side R reactive values to Alpine.js global stores.</p></li>
+<li><p>✅ Sync changes in Alpine Store back to Shiny server as reactive values.</p></li>
 <li><p>📋 TODO: Auto-Binding: Automatically handles Shiny input/output binding for dynamically generated Alpine content.</p></li>
 <li><p>📋 TODO: Supports Alpine.js Plugins, with special accomodations for Alpine AJAX</p></li>
+<li><p>📋 TODO: Examples of Sherpa in use</p></li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of sherpa like so:</p>
+<p>You can install the development version of sherpa like this:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"teebusch/sherpa"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -84,7 +86,7 @@
 <div class="section level3">
 <h3 id="a-simple-counter-pure-frontend">A Simple Counter (Pure Frontend)<a class="anchor" aria-label="anchor" href="#a-simple-counter-pure-frontend"></a>
 </h3>
-<p>Use the <code>s$</code> proxy for Shiny-Tags to easily inject Alpine logic into your Shiny-UI.</p>
+<p>Use the <code>s$</code> proxy for Shiny-Tags to easily inject Alpine directives into your Shiny-UI.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/" class="external-link">shiny</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Teebusch/sherpa" class="external-link">sherpa</a></span><span class="op">)</span></span>
@@ -134,7 +136,7 @@
 <h2 id="the-way-of-the-sherpa-rules-of-engagement">The “Way of the Sherpa” (Rules of Engagement)<a class="anchor" aria-label="anchor" href="#the-way-of-the-sherpa-rules-of-engagement"></a>
 </h2>
 <ul>
-<li><p>Use the Proxy: Always use s<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mi>a</mi><msub><mi>g</mi><mi>n</mi></msub><mi>a</mi><mi>m</mi><mi>e</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>e</mi><mi>.</mi><mi>g</mi><mi>.</mi><mo>,</mo><mi>s</mi></mrow><annotation encoding="application/x-tex">tag_name() (e.g., s</annotation></semantics></math>div()) instead of tags$div() when you want to pass x_ helpers.</p></li>
+<li><p>Use the Proxy: Use s<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mi>a</mi><msub><mi>g</mi><mi>n</mi></msub><mi>a</mi><mi>m</mi><mi>e</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>e</mi><mi>.</mi><mi>g</mi><mi>.</mi><mo>,</mo><mi>s</mi></mrow><annotation encoding="application/x-tex">tag_name() (e.g., s</annotation></semantics></math>div()) instead of tags$div() when you want to pass x_ helpers. Or, if you prefer, use the Sherpa operator <code>%s%</code></p></li>
 <li><p>No Bangs: Because of the <code>s$</code> proxy, you do not need the <code>!!!</code> operator. Just pass the helper: <code>s$div(x_data(NA))</code>.</p></li>
 <li><p>Declare Stores: Pass your store names to use_alpine(stores = c(“myStore”)) to prevent “undefined” errors during page load.</p></li>
 </ul>

@@ -1,6 +1,8 @@
-# sherpa: What the Package Does (One Line, Title Case)
+# sherpa: A lightweight bridge between R Shiny and Alpine.js
 
-What the package does (one paragraph).
+Sherpa allows you to build highly reactive user interfaces by handling
+state and transitions in the browser while keeping your business logic
+in R.
 
 ## See also
 

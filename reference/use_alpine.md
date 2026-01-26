@@ -16,6 +16,11 @@ use_alpine(plugins = NULL, stores = NULL)
   Character vector with Alpine plugin names (e.g. c("persist", "mask",
   "intersect")).
 
+- stores:
+
+  Character vector of names of stores that will be used. Must be
+  initialized here.
+
 ## Value
 
 A
