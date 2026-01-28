@@ -2,6 +2,7 @@ library(shiny)
 devtools::load_all()
 
 ui <- fluidPage(
+  # Matches the 'id' passed to the store() function in server
   use_alpine(stores = "appData"),
 
   tags$head(
@@ -61,7 +62,6 @@ ui <- fluidPage(
       )
     ),
 
-    # Store Sync Display
     s$section(
       class = "mb-4",
       s$h3("Server-Sent State"),
@@ -77,18 +77,17 @@ ui <- fluidPage(
       )
     ),
 
-    # Store Sync Display
     s$section(
       class = "mb-4",
-      s$h3("Frontend-Sent State"),
+      s$h3("Frontend-Sent State (R Print)"),
       shiny::verbatimTextOutput("print_list")
     )
   )
 )
 
 server <- function(input, output, session) {
-  store <- AlpineStore$new(
-    "appData",
+  app_state <- store(
+    id = "appData",
     data = list(
       status = "Connecting...",
       time = "00:00:00",
@@ -96,13 +95,18 @@ server <- function(input, output, session) {
     )
   )
 
+  # Updates behave exactly like reactiveValues
   observe({
     invalidateLater(1000)
-    store$data$time <- format(Sys.time(), "%H:%M:%S")
-    store$data$status <- "Connection Active"
+    app_state$time <- format(Sys.time(), "%H:%M:%S")
+    app_state$status <- "Connection Active"
   })
 
-  output$print_list <- shiny::renderPrint(store$data$items)
+  output$print_list <- shiny::renderPrint({
+    req(app_state$items)
+    cat("Items currently in R memory:\n")
+    print(unlist(app_state$items))
+  })
 }
 
 shinyApp(ui, server)

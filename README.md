@@ -9,13 +9,14 @@
 
 ## Key Features
 
+- ✅ Synced Stores: Create a store in R with store(). It behaves like a native reactiveValues list but automatically mirrors its state to Alpine.js in the browser.
+
+- ✅ Bi-Directional Sync: Change a value in R, and the UI updates. Change a value in Alpine (via x-model or logic), and R sees the change immediately.
+
 - ✅ `s$`: A "Sherpa-aware" version of `shiny::tags` that automatically handles Alpine attributes without the need for lots of backticks or the `!!!` splice-operator.
 
 - ✅ R-Native Directives: All core Alpine.js directives (`x-data`, `x-model`, `x-for`, etc.) available as standard R functions with support for modifiers and optional arguments.
 
-- ✅ AlpineStore (R6): Sync server-side R reactive values to Alpine.js global stores.
-
-- ✅ Sync changes in Alpine Store back to Shiny server as reactive values.
 
 - 📋 TODO: Auto-Binding: Automatically handles Shiny input/output binding for dynamically generated Alpine content.
 
@@ -44,6 +45,7 @@ library(sherpa)
 ui <- fluidPage(
   use_alpine(),
   s$div(
+    class = "p-5",
     x_data("{ count: 0 }"),
     s$h2("Counter: ", s$span(x_text("count"))),
     s$button("Increment", x_click("count++"), class = "btn btn-primary")
@@ -62,32 +64,32 @@ library(shiny)
 library(sherpa)
 
 ui <- fluidPage(
-  use_alpine(stores = "appState"),
+  use_alpine(stores = "app"),
+  
   s$div(
     x_data(),
-    s$h3("Server Status: ", s$span(x_text("$store.appState.label"))),
-    s$div(
-      x_bind("class", "$store.appState.connected ? 'text-success' : 'text-danger'"),
-      x_text("$store.appState.message")
-    )
+    s$h3("Status: ", s$span(x_text("$store.app.status"))),
+    s$ul(
+      s$template(
+        x_for("task in $store.app.tasks"),
+        s$li(x_text("task"))
+      )
+    ),
+    actionButton("add", "Add Task from R")
   )
 )
 
 server <- function(input, output, session) {
-  app_state <- AlpineStore$new(
-    "appState",
-    data = list(
-      label = "Pending", 
-      connected = FALSE, 
-      message = "Waiting..."
-    )
-  )
-  
-  observe({
-    invalidateLater(2000)
-    app_state$data$label <- "Live"
-    app_state$data$connected <- TRUE
-    app_state$data$message <- paste("Last sync:", Sys.time())
+  # Create a synced S3 store
+  app_state <- store("app", data = list(
+    status = "Waiting...",
+    tasks = list("Learn Alpine", "Install Sherpa")
+  ))
+
+  # Update the store directly - Alpine mirrors this instantly!
+  observeEvent(input$add, {
+    app_state$status <- "Updating..."
+    app_state$tasks <- c(app_state$tasks, paste("New Task", Sys.time()))
   })
 }
 
