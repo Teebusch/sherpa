@@ -13,10 +13,7 @@
 
 - ✅ Bi-Directional Sync: Change a value in R, and the UI updates. Change a value in Alpine (via x-model or logic), and R sees the change immediately.
 
-- ✅ `s$`: A "Sherpa-aware" version of `shiny::tags` that automatically handles Alpine attributes without the need for lots of backticks or the `!!!` splice-operator.
-
-- ✅ R-Native Directives: All core Alpine.js directives (`x-data`, `x-model`, `x-for`, etc.) available as standard R functions with support for modifiers and optional arguments.
-
+- ✅ R-Native Directives: All core Alpine.js directives (`x-data`, `x-model`, `x-for`, etc.) and some of the official plugins available as standard R functions with support for modifiers and optional arguments. Gives you a sense of IntelliSense when writing Alpine Directives in Shiny UI Code. Directive helpers are complemented by `s$`, a "Sherpa-aware" version of `shiny::tags` that automatically handles Alpine directive helpers without the need for backticks or the `!!!` splice-operator.
 
 - 📋 TODO: Auto-Binding: Automatically handles Shiny input/output binding for dynamically generated Alpine content.
 
@@ -124,6 +121,21 @@ shinyApp(ui, server)
 | `x_cloak()`      | `x-cloak`        | Hides elements until Alpine has finished loading.             |
 | `x_ignore `      | `x-cloak`        | Lets Alpine ignore an element.                                |
 | `x_modelable()`  | `x-modelable`    | Expose Alpine properties as the target of x-model.            |
+
+### Directives from Plugins
+
+Use `use_alpine(plugins = c(<PLUGIN_NAMES>))` to activate them.
+
+| R Helper         | Alpine directive | What it does                                                  | Plugin    |
+|------------------|------------------|---------------------------------------------------------------|-----------|
+| `x_intersect()`  | `x-intersect`    | React when an element enters the viewport.                    | intersect |
+| `x_sort()`       | `x-sort`         | Re-order elements by dragging them with your mouse.           | sort      |
+| `x_collapse()`   | `x-collapse`     | Expand and collapse elements.                                 | collapse  |
+| `x_mask()`       | `x-mask`         | Automatically format input fields (phone, dates, etc.).       | mask      |
+| `x_trap()`       | `x-trap`         | Trap keyboard focus within an element (for modals).           | focus     |
+| `x_anchor()`     | `x-anchor`       | Position an element relative to another reference element.    | anchor    |
+| `x_resize()`     | `x-resize`       | Execute JavaScript whenever an element's size changes.        | resize    |
+
 
 Directive missing? Use `x_attr_builder()` to create your own.
 

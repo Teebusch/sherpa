@@ -1,6 +1,7 @@
-.globals = rlang::new_environment(
+.sherpa_globals = rlang::new_environment(
   data = list(
-    alpine_version = "3.13.3",
-    alpine_cdn_base = "https://cdn.jsdelivr.net/npm"
+    alpine_version = "3.x.x",
+    alpine_cdn_base = "https://cdn.jsdelivr.net/npm",
+    active_plugins = c()
   )
 )

@@ -17,6 +17,7 @@
 #' }
 use_alpine <- function(plugins = NULL, stores = NULL) {
   alpine_plugin_deps <- purrr::map(plugins, get_alpine_plugin_dep)
+  set_active_plugins(plugins)
 
   htmltools::tagList(
     !!!alpine_plugin_deps, # plugins must be loaded before core
@@ -51,13 +52,13 @@ create_register_stores_script <- function(stores) {
 get_alpine_core_dep <- function() {
   base_url <- sprintf(
     "%s/alpinejs@%s/dist/",
-    .globals$alpine_cdn_base,
-    .globals$alpine_version
+    .sherpa_globals$alpine_cdn_base,
+    .sherpa_globals$alpine_version
   )
 
   htmltools::htmlDependency(
     name = "alpine-core",
-    version = .globals$alpine_version,
+    version = "0.0.1",
     src = c(href = base_url),
     script = list(src = "cdn.min.js", defer = NA)
   )
@@ -72,14 +73,14 @@ get_alpine_plugin_dep <- function(plugin_name) {
   pkg_name <- paste0("@alpinejs/", plugin_name)
   base_url <- sprintf(
     "%s/%s@%s/dist/",
-    .globals$alpine_cdn_base,
+    .sherpa_globals$alpine_cdn_base,
     pkg_name,
-    .globals$alpine_version
+    .sherpa_globals$alpine_version
   )
 
   htmltools::htmlDependency(
     name = paste0("alpine-", plugin_name),
-    version = .globals$alpine_version,
+    version = "0.0.1",
     src = c(href = base_url),
     script = list(src = "cdn.min.js", defer = NA)
   )
@@ -93,4 +94,29 @@ get_bridge_dep <- function() {
     src = c(file = system.file("js", package = "sherpa")),
     script = "alpine-shiny-bridge.js"
   )
+}
+
+
+#' Register active plugins
+#' @keywords internal
+set_active_plugins <- function(plugins) {
+  .sherpa_globals$active_plugins <- plugins
+}
+
+
+#' Assert that a plugin is loaded
+#' @param plugin Character(1). The name of the required Alpine plugin
+#' @keywords internal
+assert_plugin_active <- function(plugin) {
+  active <- .sherpa_globals$active_plugins
+
+  if (!plugin %in% active) {
+    # extract name of the calling function as string
+    caller_name <- rlang::call_name(sys.call(-1))
+
+    cli::cli_warn(c(
+      "!" = "Helper {.fn {caller_name}} requires the {.val {plugin}} plugin.",
+      "i" = "Please add it to your UI: {.code use_alpine(plugins = '{plugin}')}"
+    ))
+  }
 }

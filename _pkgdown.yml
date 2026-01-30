@@ -9,7 +9,7 @@ reference:
 - title: Alpine Store Synchronisation
   desc: synchronise data between Shiny and Alpine.js in the client
   contents:
-  - AlpineStore
+  - store
 - title: Alpine Directive Helpers
   desc: Add alpine directive attributes to HTML-Tags
   contents:
