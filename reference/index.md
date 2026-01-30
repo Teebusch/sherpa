@@ -11,8 +11,8 @@ Use Alpine in your App
 
 synchronise data between Shiny and Alpine.js in the client
 
-- [`AlpineStore`](https://teebusch.github.io/sherpa/reference/AlpineStore.md)
-  : Alpine.js Store Manager
+- [`store()`](https://teebusch.github.io/sherpa/reference/store.md) :
+  Create a Sherpa Store
 
 ## Alpine Directive Helpers
 
@@ -22,6 +22,8 @@ Add alpine directive attributes to HTML-Tags
   Sherpa Tag Proxy
 - [`` `%s%` ``](https://teebusch.github.io/sherpa/reference/sherpa_operator.md)
   : Sherpa Attribute Operator
+- [`x_anchor()`](https://teebusch.github.io/sherpa/reference/x_anchor.md)
+  : Alpine.js Anchor Directive
 - [`x_attr_builder()`](https://teebusch.github.io/sherpa/reference/x_attr_builder.md)
   : Helper to construct Alpine.js attributes
 - [`x_bind()`](https://teebusch.github.io/sherpa/reference/x_bind.md) :
@@ -32,6 +34,8 @@ Add alpine directive attributes to HTML-Tags
   : Click Event Shortcut
 - [`x_cloak()`](https://teebusch.github.io/sherpa/reference/x_cloak.md)
   : Hide Elements until Alpine is Loaded
+- [`x_collapse()`](https://teebusch.github.io/sherpa/reference/x_collapse.md)
+  : Alpine.js Collapse Directive
 - [`x_data()`](https://teebusch.github.io/sherpa/reference/x_data.md) :
   Define Alpine Component Data
 - [`x_effect()`](https://teebusch.github.io/sherpa/reference/x_effect.md)
@@ -48,6 +52,10 @@ Add alpine directive attributes to HTML-Tags
   : Ignore Element for Alpine
 - [`x_init()`](https://teebusch.github.io/sherpa/reference/x_init.md) :
   Alpine Initialization Hook
+- [`x_intersect()`](https://teebusch.github.io/sherpa/reference/x_intersect.md)
+  : Alpine.js Intersect Directive
+- [`x_mask()`](https://teebusch.github.io/sherpa/reference/x_mask.md) :
+  Alpine.js Mask Directive
 - [`x_model()`](https://teebusch.github.io/sherpa/reference/x_model.md)
   : Two-Way Data Binding
 - [`x_modelable()`](https://teebusch.github.io/sherpa/reference/x_modelable.md)
@@ -56,8 +64,12 @@ Add alpine directive attributes to HTML-Tags
   Event Listener
 - [`x_ref()`](https://teebusch.github.io/sherpa/reference/x_ref.md) :
   Utility for accessing DOM elements directly.
+- [`x_resize()`](https://teebusch.github.io/sherpa/reference/x_resize.md)
+  : Alpine.js Resize Directive
 - [`x_show()`](https://teebusch.github.io/sherpa/reference/x_show.md) :
   Toggle Visibility
+- [`x_sort()`](https://teebusch.github.io/sherpa/reference/x_sort.md) :
+  Alpine.js Sort Directive
 - [`x_store_ref()`](https://teebusch.github.io/sherpa/reference/x_store_ref.md)
   : Access an Alpine Store
 - [`x_teleport()`](https://teebusch.github.io/sherpa/reference/x_teleport.md)
@@ -66,3 +78,5 @@ Add alpine directive attributes to HTML-Tags
   Bind Text Content
 - [`x_transition()`](https://teebusch.github.io/sherpa/reference/x_transition.md)
   : Apply CSS Transitions
+- [`x_trap()`](https://teebusch.github.io/sherpa/reference/x_trap.md) :
+  Alpine.js Focus Trap Directive

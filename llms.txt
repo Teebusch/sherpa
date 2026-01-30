@@ -8,20 +8,23 @@ business logic in R.
 
 ## Key Features
 
-- ✅ `s$`: A “Sherpa-aware” version of
-  [`shiny::tags`](https://rstudio.github.io/htmltools/reference/builder.html)
-  that automatically handles Alpine attributes without the need for lots
-  of backticks or the `!!!` splice-operator.
+- ✅ Synced Stores: Create a store in R with store(). It behaves like a
+  native reactiveValues list but automatically mirrors its state to
+  Alpine.js in the browser.
+
+- ✅ Bi-Directional Sync: Change a value in R, and the UI updates.
+  Change a value in Alpine (via x-model or logic), and R sees the change
+  immediately.
 
 - ✅ R-Native Directives: All core Alpine.js directives (`x-data`,
-  `x-model`, `x-for`, etc.) available as standard R functions with
-  support for modifiers and optional arguments.
-
-- ✅ AlpineStore (R6): Sync server-side R reactive values to Alpine.js
-  global stores.
-
-- ✅ Sync changes in Alpine Store back to Shiny server as reactive
-  values.
+  `x-model`, `x-for`, etc.) and some of the official plugins available
+  as standard R functions with support for modifiers and optional
+  arguments. Gives you a sense of IntelliSense when writing Alpine
+  Directives in Shiny UI Code. Directive helpers are complemented by
+  `s$`, a “Sherpa-aware” version of
+  [`shiny::tags`](https://rstudio.github.io/htmltools/reference/builder.html)
+  that automatically handles Alpine directive helpers without the need
+  for backticks or the `!!!` splice-operator.
 
 - 📋 TODO: Auto-Binding: Automatically handles Shiny input/output
   binding for dynamically generated Alpine content.
@@ -53,6 +56,7 @@ library(sherpa)
 ui <- fluidPage(
   use_alpine(),
   s$div(
+    class = "p-5",
     x_data("{ count: 0 }"),
     s$h2("Counter: ", s$span(x_text("count"))),
     s$button("Increment", x_click("count++"), class = "btn btn-primary")
@@ -71,32 +75,32 @@ library(shiny)
 library(sherpa)
 
 ui <- fluidPage(
-  use_alpine(stores = "appState"),
+  use_alpine(stores = "app"),
+  
   s$div(
     x_data(),
-    s$h3("Server Status: ", s$span(x_text("$store.appState.label"))),
-    s$div(
-      x_bind("class", "$store.appState.connected ? 'text-success' : 'text-danger'"),
-      x_text("$store.appState.message")
-    )
+    s$h3("Status: ", s$span(x_text("$store.app.status"))),
+    s$ul(
+      s$template(
+        x_for("task in $store.app.tasks"),
+        s$li(x_text("task"))
+      )
+    ),
+    actionButton("add", "Add Task from R")
   )
 )
 
 server <- function(input, output, session) {
-  app_state <- AlpineStore$new(
-    "appState",
-    data = list(
-      label = "Pending", 
-      connected = FALSE, 
-      message = "Waiting..."
-    )
-  )
-  
-  observe({
-    invalidateLater(2000)
-    app_state$data$label <- "Live"
-    app_state$data$connected <- TRUE
-    app_state$data$message <- paste("Last sync:", Sys.time())
+  # Create a synced S3 store
+  app_state <- store("app", data = list(
+    status = "Waiting...",
+    tasks = list("Learn Alpine", "Install Sherpa")
+  ))
+
+  # Update the store directly - Alpine mirrors this instantly!
+  observeEvent(input$add, {
+    app_state$status <- "Updating..."
+    app_state$tasks <- c(app_state$tasks, paste("New Task", Sys.time()))
   })
 }
 
@@ -136,6 +140,20 @@ shinyApp(ui, server)
 | `x_ignore`                                                                      | `x-cloak`        | Lets Alpine ignore an element.                                |
 | [`x_modelable()`](https://teebusch.github.io/sherpa/reference/x_modelable.md)   | `x-modelable`    | Expose Alpine properties as the target of x-model.            |
 
+### Directives from Plugins
+
+Use `use_alpine(plugins = c(<PLUGIN_NAMES>))` to activate them.
+
+| R Helper                                                                      | Alpine directive | What it does                                               | Plugin    |
+|-------------------------------------------------------------------------------|------------------|------------------------------------------------------------|-----------|
+| [`x_intersect()`](https://teebusch.github.io/sherpa/reference/x_intersect.md) | `x-intersect`    | React when an element enters the viewport.                 | intersect |
+| [`x_sort()`](https://teebusch.github.io/sherpa/reference/x_sort.md)           | `x-sort`         | Re-order elements by dragging them with your mouse.        | sort      |
+| [`x_collapse()`](https://teebusch.github.io/sherpa/reference/x_collapse.md)   | `x-collapse`     | Expand and collapse elements.                              | collapse  |
+| [`x_mask()`](https://teebusch.github.io/sherpa/reference/x_mask.md)           | `x-mask`         | Automatically format input fields (phone, dates, etc.).    | mask      |
+| [`x_trap()`](https://teebusch.github.io/sherpa/reference/x_trap.md)           | `x-trap`         | Trap keyboard focus within an element (for modals).        | focus     |
+| [`x_anchor()`](https://teebusch.github.io/sherpa/reference/x_anchor.md)       | `x-anchor`       | Position an element relative to another reference element. | anchor    |
+| [`x_resize()`](https://teebusch.github.io/sherpa/reference/x_resize.md)       | `x-resize`       | Execute JavaScript whenever an element’s size changes.     | resize    |
+
 Directive missing? Use
 [`x_attr_builder()`](https://teebusch.github.io/sherpa/reference/x_attr_builder.md)
 to create your own.
@@ -155,8 +173,8 @@ Use Alpine in your App
 
 synchronise data between Shiny and Alpine.js in the client
 
-- [`AlpineStore`](https://teebusch.github.io/sherpa/reference/AlpineStore.md)
-  : Alpine.js Store Manager
+- [`store()`](https://teebusch.github.io/sherpa/reference/store.md) :
+  Create a Sherpa Store
 
 ## Alpine Directive Helpers
 
@@ -166,6 +184,8 @@ Add alpine directive attributes to HTML-Tags
   Sherpa Tag Proxy
 - [`` `%s%` ``](https://teebusch.github.io/sherpa/reference/sherpa_operator.md)
   : Sherpa Attribute Operator
+- [`x_anchor()`](https://teebusch.github.io/sherpa/reference/x_anchor.md)
+  : Alpine.js Anchor Directive
 - [`x_attr_builder()`](https://teebusch.github.io/sherpa/reference/x_attr_builder.md)
   : Helper to construct Alpine.js attributes
 - [`x_bind()`](https://teebusch.github.io/sherpa/reference/x_bind.md) :
@@ -176,6 +196,8 @@ Add alpine directive attributes to HTML-Tags
   : Click Event Shortcut
 - [`x_cloak()`](https://teebusch.github.io/sherpa/reference/x_cloak.md)
   : Hide Elements until Alpine is Loaded
+- [`x_collapse()`](https://teebusch.github.io/sherpa/reference/x_collapse.md)
+  : Alpine.js Collapse Directive
 - [`x_data()`](https://teebusch.github.io/sherpa/reference/x_data.md) :
   Define Alpine Component Data
 - [`x_effect()`](https://teebusch.github.io/sherpa/reference/x_effect.md)
@@ -192,6 +214,10 @@ Add alpine directive attributes to HTML-Tags
   : Ignore Element for Alpine
 - [`x_init()`](https://teebusch.github.io/sherpa/reference/x_init.md) :
   Alpine Initialization Hook
+- [`x_intersect()`](https://teebusch.github.io/sherpa/reference/x_intersect.md)
+  : Alpine.js Intersect Directive
+- [`x_mask()`](https://teebusch.github.io/sherpa/reference/x_mask.md) :
+  Alpine.js Mask Directive
 - [`x_model()`](https://teebusch.github.io/sherpa/reference/x_model.md)
   : Two-Way Data Binding
 - [`x_modelable()`](https://teebusch.github.io/sherpa/reference/x_modelable.md)
@@ -200,8 +226,12 @@ Add alpine directive attributes to HTML-Tags
   Event Listener
 - [`x_ref()`](https://teebusch.github.io/sherpa/reference/x_ref.md) :
   Utility for accessing DOM elements directly.
+- [`x_resize()`](https://teebusch.github.io/sherpa/reference/x_resize.md)
+  : Alpine.js Resize Directive
 - [`x_show()`](https://teebusch.github.io/sherpa/reference/x_show.md) :
   Toggle Visibility
+- [`x_sort()`](https://teebusch.github.io/sherpa/reference/x_sort.md) :
+  Alpine.js Sort Directive
 - [`x_store_ref()`](https://teebusch.github.io/sherpa/reference/x_store_ref.md)
   : Access an Alpine Store
 - [`x_teleport()`](https://teebusch.github.io/sherpa/reference/x_teleport.md)
@@ -210,4 +240,6 @@ Add alpine directive attributes to HTML-Tags
   Bind Text Content
 - [`x_transition()`](https://teebusch.github.io/sherpa/reference/x_transition.md)
   : Apply CSS Transitions
+- [`x_trap()`](https://teebusch.github.io/sherpa/reference/x_trap.md) :
+  Alpine.js Focus Trap Directive
 

@@ -64,10 +64,9 @@
 <h2 id="key-features">Key Features<a class="anchor" aria-label="anchor" href="#key-features"></a>
 </h2>
 <ul>
-<li><p>✅ <code>s$</code>: A “Sherpa-aware” version of <code><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">shiny::tags</a></code> that automatically handles Alpine attributes without the need for lots of backticks or the <code>!!!</code> splice-operator.</p></li>
-<li><p>✅ R-Native Directives: All core Alpine.js directives (<code>x-data</code>, <code>x-model</code>, <code>x-for</code>, etc.) available as standard R functions with support for modifiers and optional arguments.</p></li>
-<li><p>✅ AlpineStore (R6): Sync server-side R reactive values to Alpine.js global stores.</p></li>
-<li><p>✅ Sync changes in Alpine Store back to Shiny server as reactive values.</p></li>
+<li><p>✅ Synced Stores: Create a store in R with store(). It behaves like a native reactiveValues list but automatically mirrors its state to Alpine.js in the browser.</p></li>
+<li><p>✅ Bi-Directional Sync: Change a value in R, and the UI updates. Change a value in Alpine (via x-model or logic), and R sees the change immediately.</p></li>
+<li><p>✅ R-Native Directives: All core Alpine.js directives (<code>x-data</code>, <code>x-model</code>, <code>x-for</code>, etc.) and some of the official plugins available as standard R functions with support for modifiers and optional arguments. Gives you a sense of IntelliSense when writing Alpine Directives in Shiny UI Code. Directive helpers are complemented by <code>s$</code>, a “Sherpa-aware” version of <code><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">shiny::tags</a></code> that automatically handles Alpine directive helpers without the need for backticks or the <code>!!!</code> splice-operator.</p></li>
 <li><p>📋 TODO: Auto-Binding: Automatically handles Shiny input/output binding for dynamically generated Alpine content.</p></li>
 <li><p>📋 TODO: Supports Alpine.js Plugins, with special accomodations for Alpine AJAX</p></li>
 <li><p>📋 TODO: Examples of Sherpa in use</p></li>
@@ -94,6 +93,7 @@
 <span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="reference/use_alpine.html">use_alpine</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="va">s</span><span class="op">$</span><span class="fu">div</span><span class="op">(</span></span>
+<span>    class <span class="op">=</span> <span class="st">"p-5"</span>,</span>
 <span>    <span class="fu"><a href="reference/x_data.html">x_data</a></span><span class="op">(</span><span class="st">"{ count: 0 }"</span><span class="op">)</span>,</span>
 <span>    <span class="va">s</span><span class="op">$</span><span class="fu">h2</span><span class="op">(</span><span class="st">"Counter: "</span>, <span class="va">s</span><span class="op">$</span><span class="fu">span</span><span class="op">(</span><span class="fu"><a href="reference/x_text.html">x_text</a></span><span class="op">(</span><span class="st">"count"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    <span class="va">s</span><span class="op">$</span><span class="fu">button</span><span class="op">(</span><span class="st">"Increment"</span>, <span class="fu"><a href="reference/x_click.html">x_click</a></span><span class="op">(</span><span class="st">"count++"</span><span class="op">)</span>, class <span class="op">=</span> <span class="st">"btn btn-primary"</span><span class="op">)</span></span>
@@ -112,32 +112,32 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Teebusch/sherpa" class="external-link">sherpa</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="reference/use_alpine.html">use_alpine</a></span><span class="op">(</span>stores <span class="op">=</span> <span class="st">"appState"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="reference/use_alpine.html">use_alpine</a></span><span class="op">(</span>stores <span class="op">=</span> <span class="st">"app"</span><span class="op">)</span>,</span>
+<span>  </span>
 <span>  <span class="va">s</span><span class="op">$</span><span class="fu">div</span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="reference/x_data.html">x_data</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    <span class="va">s</span><span class="op">$</span><span class="fu">h3</span><span class="op">(</span><span class="st">"Server Status: "</span>, <span class="va">s</span><span class="op">$</span><span class="fu">span</span><span class="op">(</span><span class="fu"><a href="reference/x_text.html">x_text</a></span><span class="op">(</span><span class="st">"$store.appState.label"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    <span class="va">s</span><span class="op">$</span><span class="fu">div</span><span class="op">(</span></span>
-<span>      <span class="fu"><a href="reference/x_bind.html">x_bind</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"$store.appState.connected ? 'text-success' : 'text-danger'"</span><span class="op">)</span>,</span>
-<span>      <span class="fu"><a href="reference/x_text.html">x_text</a></span><span class="op">(</span><span class="st">"$store.appState.message"</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
+<span>    <span class="va">s</span><span class="op">$</span><span class="fu">h3</span><span class="op">(</span><span class="st">"Status: "</span>, <span class="va">s</span><span class="op">$</span><span class="fu">span</span><span class="op">(</span><span class="fu"><a href="reference/x_text.html">x_text</a></span><span class="op">(</span><span class="st">"$store.app.status"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    <span class="va">s</span><span class="op">$</span><span class="fu">ul</span><span class="op">(</span></span>
+<span>      <span class="va">s</span><span class="op">$</span><span class="fu">template</span><span class="op">(</span></span>
+<span>        <span class="fu"><a href="reference/x_for.html">x_for</a></span><span class="op">(</span><span class="st">"task in $store.app.tasks"</span><span class="op">)</span>,</span>
+<span>        <span class="va">s</span><span class="op">$</span><span class="fu">li</span><span class="op">(</span><span class="fu"><a href="reference/x_text.html">x_text</a></span><span class="op">(</span><span class="st">"task"</span><span class="op">)</span><span class="op">)</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/actionButton.html" class="external-link">actionButton</a></span><span class="op">(</span><span class="st">"add"</span>, <span class="st">"Add Task from R"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">app_state</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/AlpineStore.html">AlpineStore</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
-<span>    <span class="st">"appState"</span>,</span>
-<span>    data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>      label <span class="op">=</span> <span class="st">"Pending"</span>, </span>
-<span>      connected <span class="op">=</span> <span class="cn">FALSE</span>, </span>
-<span>      message <span class="op">=</span> <span class="st">"Waiting..."</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span>  </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observe.html" class="external-link">observe</a></span><span class="op">(</span><span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/invalidateLater.html" class="external-link">invalidateLater</a></span><span class="op">(</span><span class="fl">2000</span><span class="op">)</span></span>
-<span>    <span class="va">app_state</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">label</span> <span class="op">&lt;-</span> <span class="st">"Live"</span></span>
-<span>    <span class="va">app_state</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">connected</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span></span>
-<span>    <span class="va">app_state</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">message</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Last sync:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="co"># Create a synced S3 store</span></span>
+<span>  <span class="va">app_state</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/store.html">store</a></span><span class="op">(</span><span class="st">"app"</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    status <span class="op">=</span> <span class="st">"Waiting..."</span>,</span>
+<span>    tasks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Learn Alpine"</span>, <span class="st">"Install Sherpa"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co"># Update the store directly - Alpine mirrors this instantly!</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">add</span>, <span class="op">{</span></span>
+<span>    <span class="va">app_state</span><span class="op">$</span><span class="va">status</span> <span class="op">&lt;-</span> <span class="st">"Updating..."</span></span>
+<span>    <span class="va">app_state</span><span class="op">$</span><span class="va">tasks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">app_state</span><span class="op">$</span><span class="va">tasks</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"New Task"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">}</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
@@ -250,8 +250,71 @@
 </tr>
 </tbody>
 </table>
+<div class="section level3">
+<h3 id="directives-from-plugins">Directives from Plugins<a class="anchor" aria-label="anchor" href="#directives-from-plugins"></a>
+</h3>
+<p>Use <code>use_alpine(plugins = c(&lt;PLUGIN_NAMES&gt;))</code> to activate them.</p>
+<table class="table">
+<colgroup>
+<col width="16%">
+<col width="16%">
+<col width="57%">
+<col width="10%">
+</colgroup>
+<thead><tr class="header">
+<th>R Helper</th>
+<th>Alpine directive</th>
+<th>What it does</th>
+<th>Plugin</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code><a href="reference/x_intersect.html">x_intersect()</a></code></td>
+<td><code>x-intersect</code></td>
+<td>React when an element enters the viewport.</td>
+<td>intersect</td>
+</tr>
+<tr class="even">
+<td><code><a href="reference/x_sort.html">x_sort()</a></code></td>
+<td><code>x-sort</code></td>
+<td>Re-order elements by dragging them with your mouse.</td>
+<td>sort</td>
+</tr>
+<tr class="odd">
+<td><code><a href="reference/x_collapse.html">x_collapse()</a></code></td>
+<td><code>x-collapse</code></td>
+<td>Expand and collapse elements.</td>
+<td>collapse</td>
+</tr>
+<tr class="even">
+<td><code><a href="reference/x_mask.html">x_mask()</a></code></td>
+<td><code>x-mask</code></td>
+<td>Automatically format input fields (phone, dates, etc.).</td>
+<td>mask</td>
+</tr>
+<tr class="odd">
+<td><code><a href="reference/x_trap.html">x_trap()</a></code></td>
+<td><code>x-trap</code></td>
+<td>Trap keyboard focus within an element (for modals).</td>
+<td>focus</td>
+</tr>
+<tr class="even">
+<td><code><a href="reference/x_anchor.html">x_anchor()</a></code></td>
+<td><code>x-anchor</code></td>
+<td>Position an element relative to another reference element.</td>
+<td>anchor</td>
+</tr>
+<tr class="odd">
+<td><code><a href="reference/x_resize.html">x_resize()</a></code></td>
+<td><code>x-resize</code></td>
+<td>Execute JavaScript whenever an element’s size changes.</td>
+<td>resize</td>
+</tr>
+</tbody>
+</table>
 <p>Directive missing? Use <code><a href="reference/x_attr_builder.html">x_attr_builder()</a></code> to create your own.</p>
 <p>See the <a href="https://alpinejs.dev/directives/" class="external-link">Alpine Docs for more details</a></p>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
