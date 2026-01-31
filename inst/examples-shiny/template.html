@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sherpa Template Demo</title>
+    {{ headContent() }}
+    {{ sherpa_deps }}
+</head>
+<body>
+    <div x-data>
+        <nav class="navbar">
+            <h1 x-text="$store.app.title"></h1>
+        </nav>
+    
+        <main>
+            <div class="card">
+                <p>Count is: <span x-text="$store.app.count"></span></p>
+                <button x-on:click="$store.app.count++">Increase</button>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

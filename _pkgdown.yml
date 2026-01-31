@@ -16,3 +16,7 @@ reference:
   - s
   - "`%s%`"
   - starts_with("x")
+- title: HTML-Templates
+  contents:
+  - html_template
+  - watch

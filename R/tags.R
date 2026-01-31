@@ -14,7 +14,7 @@
 #' as HTML-attributes:
 #'
 #' - `splice` them into the function call using [rlang::splice-operator] `!!!`
-#' - add them using [`%s%`], a wrapper for [shiny::tagAppendAttributes]
+#' - add them using [sherpa_operator], a wrapper for [shiny::tagAppendAttributes]
 #'   that automatically splices sherpa attribute helpers
 #' - using this "tag proxy". It proxies the `shiny::tags`-Object but adds
 #'   automatic splicing for sherpa attribute helpers.
@@ -86,6 +86,7 @@ s <- create_tag_proxy()
 #' @param tag A shiny tag
 #' @param ... Sherpa attributes (e.g., x_data(), x_cloak())
 #' @export
+#' @aliases sherpa_operator
 #' @rdname sherpa_operator
 `%s%` <- function(tag, ...) {
   if (!inherits(tag, "shiny.tag")) {

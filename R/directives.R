@@ -158,13 +158,9 @@ x_cloak <- function() {
   x_attr_builder("cloak", NA)
 }
 
-# ---------------------------------------------------------
-# Control Flow (Requires <template>)
-# ---------------------------------------------------------
-
 #' Conditional Rendering (x-if)
 #'
-#' Elements inside an x-if must be wrapped in a <template> tag.
+#' Elements inside an x-if must be wrapped in a `<template>` tag.
 #'
 #' @param condition JavaScript expression.
 #' @seealso <https://alpinejs.dev/directives/if>
@@ -175,7 +171,7 @@ x_if <- function(condition) {
 
 #' Loop Through Data (x-for)
 #'
-#' Elements inside an x-for must be wrapped in a <template> tag.
+#' Elements inside an x-for must be wrapped in a `<template>` tag.
 #'
 #' @param iteration Loop syntax, e.g., "item in items".
 #' @param key_prop Optional property name to use as a unique key.
@@ -186,10 +182,6 @@ x_for <- function(iteration, key_prop = NULL) {
   # If a key_prop is provided, we'll suggest it in the documentation context.
   x_attr_builder("for", iteration)
 }
-
-# ---------------------------------------------------------
-# Reactivity & DOM Manipulation
-# ---------------------------------------------------------
 
 #' Reactive Effects (x-effect)
 #'
@@ -224,7 +216,6 @@ x_ignore <- function() {
   x_attr_builder("ignore", NA)
 }
 
-
 #' Utility for accessing DOM elements directly.
 #'
 #' It's most useful as a replacement for APIs like getElementById and querySelector.
@@ -246,10 +237,6 @@ x_ref <- function(ref) {
 x_id <- function(id_name) {
   x_attr_builder("id", id_name)
 }
-
-# ---------------------------------------------------------
-# Transitions
-# ---------------------------------------------------------
 
 #' Apply CSS Transitions
 #'
@@ -301,4 +288,155 @@ x_store_ref <- function(store_id, prop = NULL) {
     return(sprintf("$store.%s", store_id))
   }
   sprintf("$store.%s.%s", store_id, prop)
+}
+
+# ---------------------------------------------------------
+# Directives for official plugins
+# ---------------------------------------------------------
+
+#' Alpine.js Mask Directive
+#'
+#' Automatically format input fields as a user types.
+#' Requires Plugin "Mask"
+#'
+#' @param mask The mask pattern (e.g., "99/99/9999")
+#' @param quote Logical, if TRUE, wraps the mask in single quotes (needed for strings)
+#' @seealso <https://alpinejs.dev/plugins/mask>
+#' @export
+x_mask <- function(mask, quote = TRUE) {
+  assert_plugin_active("mask")
+
+  if (quote && !grepl("^\\$", mask)) {
+    mask <- sprintf("'%s'", mask)
+  }
+
+  x_attr_builder("mask", mask)
+}
+
+#' Alpine.js Focus Trap Directive
+#'
+#' Trap focus within a specific DOM element (perfect for modals).
+#' Requires Plugin "Focus"
+#'
+#' @param expression A JS expression evaluating to boolean (e.g., "isOpen")
+#' @param inertia Logical, if TRUE, allows focus to move to browser chrome
+#' @param noscroll Logical, if TRUE, prevents scrolling when focus is trapped
+#' @seealso <https://alpinejs.dev/plugins/focus>
+#' @export
+x_trap <- function(expression, inertia = FALSE, noscroll = FALSE) {
+  assert_plugin_active("focus")
+
+  directive <- "trap"
+  if (inertia) {
+    directive <- paste0(directive, ".inertia")
+  }
+  if (noscroll) {
+    directive <- paste0(directive, ".noscroll")
+  }
+
+  x_attr_builder(directive, expression)
+}
+
+#' Alpine.js Anchor Directive
+#'
+#' Position an element relative to another "reference" element.
+#' Requires Plugin "Anchor"
+#'
+#' @param ref The reference element (e.g., "$refs.button")
+#' @param pivot The anchor point (e.g., "bottom-start", "top-end")
+#' @param offset Offset in pixels
+#' @seealso <https://alpinejs.dev/plugins/anchor>
+#' @export
+x_anchor <- function(ref, pivot = NULL, offset = NULL) {
+  assert_plugin_active("anchor")
+
+  directive <- "anchor"
+  if (!is.null(pivot)) {
+    directive <- paste0(directive, ".", pivot)
+  }
+  if (!is.null(offset)) {
+    directive <- paste0(directive, ".offset.", offset)
+  }
+
+  x_attr_builder(directive, ref)
+}
+
+#' Alpine.js Resize Directive
+#'
+#' Execute code whenever an element's size changes.
+#' Requires Plugin "Resize"
+#'
+#' @param expression The JS code to run when resized
+#' @seealso <https://alpinejs.dev/plugins/resize>
+#' @export
+x_resize <- function(expression) {
+  assert_plugin_active("resize")
+  x_attr_builder("resize", expression)
+}
+
+#' Alpine.js Intersect Directive
+#'
+#' React when an element enters the viewport.
+#' Requires Plugin "Intersect"
+#'
+#' @param expression The JS code to run on intersection
+#' @param once Logical, if TRUE, only trigger the first time
+#' @seealso <https://alpinejs.dev/plugins/intersect>
+#' @export
+x_intersect <- function(expression, once = FALSE) {
+  assert_plugin_active("intersect")
+
+  directive <- "intersect"
+  if (once) {
+    directive <- paste0(directive, ".once")
+  }
+
+  x_attr_builder(directive, expression)
+}
+
+#' Alpine.js Collapse Directive
+#'
+#' Expand and collapse elements using smooth animations.
+#' Requires Plugin "Collapse"
+#'
+#' @param duration Optional duration (e.g., "500ms")
+#' @param min Optional minimum height (e.g., "50px")
+#' @seealso <https://alpinejs.dev/plugins/collapse>
+#' @export
+x_collapse <- function(duration = NULL, min = NULL) {
+  assert_plugin_active("collapse")
+
+  directive <- "collapse"
+  if (!is.null(duration)) {
+    directive <- paste0(directive, ".duration.", duration)
+  }
+  if (!is.null(min)) {
+    directive <- paste0(directive, ".min.", min)
+  }
+
+  x_attr_builder(directive, NA)
+}
+
+#' Alpine.js Sort Directive
+#'
+#' Re-order elements by dragging them with your mouse.
+#' Requires Plugin "Sort"
+#'
+#' @param group Optional group name to allow sorting between multiple lists
+#' @param handle Optional selector for a drag handle (e.g., '.drag-handle')
+#' @seealso <https://alpinejs.dev/plugins/sort>
+#' @export
+x_sort <- function(group = NULL, handle = NULL) {
+  assert_plugin_active("sort")
+
+  directive <- "sort"
+  if (!is.null(group)) {
+    directive <- paste0(directive, ".group.", group)
+  }
+  if (!is.null(handle)) {
+    directive <- paste0(directive, ".handle.", handle)
+  }
+
+  # Usually used as x-sort on a parent container
+  x_attr_builder(directive, NA)
 }

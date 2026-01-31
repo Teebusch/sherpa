@@ -14,7 +14,7 @@ store <- function(
   session = shiny::getDefaultReactiveDomain()
 ) {
   if (is.null(session)) {
-    stop("[Sherpa] store must be initialized within a Shiny session.")
+    stop("Store must be initialized within a Shiny session.")
   }
 
   state <- rlang::new_environment(list(

@@ -5,7 +5,13 @@
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-**sherpa** carries your data between **R Shiny** and **Alpine.js**. It lets you build highly reactive user interfaces by synchronizing reactive values between a Shiny backend and an Alpine.js Frontend. This lets you handle UI-state and transitions in the browser while keeping your business logic in R.
+**sherpa** carries your data between **R Shiny** and **Alpine.js**. It lets you build highly reactive user interfaces by synchronizing reactive values between a Shiny backend and an Alpine.js Frontend. 
+
+## Why Alpine.js?
+
+[Alpine.js](https://alpinejs.dev/) is a rugged, minimal framework for composing behavior directly in your markup. It is the perfect partner for Shiny because it is great at handling the "last mile" of the user experience and it integrates nicely into Shiny and the Shiny development workflow.
+
+In a standard Shiny app, the server often manages micro-interactions and things like disabling a button or hiding an element can be surprisingly cumbersome to implement. Sherpa's goal is to take some of that weight from Shiny's shoulders, so Shiny can do what it does best: heavy-duty data processing, complex business logic, and deep integration with the R ecosystem while Alpine.js handles the "fast-twitch" reflexes: UI state, smooth transitions, and client-side interactions that happen at the speed of thought.
 
 ## Key Features
 
@@ -14,6 +20,8 @@
 - ✅ Bi-Directional Sync: Change a value in R, and the UI updates. Change a value in Alpine (via x-model or logic), and R sees the change immediately.
 
 - ✅ R-Native Directives: All core Alpine.js directives (`x-data`, `x-model`, `x-for`, etc.) and some of the official plugins available as standard R functions with support for modifiers and optional arguments. Gives you a sense of IntelliSense when writing Alpine Directives in Shiny UI Code. Directive helpers are complemented by `s$`, a "Sherpa-aware" version of `shiny::tags` that automatically handles Alpine directive helpers without the need for backticks or the `!!!` splice-operator.
+
+- ✅ Support for HTML-Templates, so you can write your Alpine.js code in an HTML file and leverage the power of IntelliSense. Plus: there's an experimental Live-Server with HMR, that renders your changes instantly while maintaining the current state.
 
 - 📋 TODO: Auto-Binding: Automatically handles Shiny input/output binding for dynamically generated Alpine content.
 

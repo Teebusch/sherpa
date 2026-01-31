@@ -2,6 +2,7 @@
 % Please edit documentation in R/tags.R
 \name{\%s\%}
 \alias{\%s\%}
+\alias{sherpa_operator}
 \title{Sherpa Attribute Operator}
 \usage{
 tag \%s\% ...

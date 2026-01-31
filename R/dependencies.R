@@ -22,7 +22,7 @@ use_alpine <- function(plugins = NULL, stores = NULL) {
   htmltools::tagList(
     !!!alpine_plugin_deps, # plugins must be loaded before core
     get_alpine_core_dep(),
-    get_bridge_dep(),
+    get_sherpa_js_dep(),
     create_register_stores_script(stores)
   )
 }
@@ -36,16 +36,17 @@ create_register_stores_script <- function(stores) {
   }
   registry <- paste0(
     sprintf("Alpine.store('%s', {test: 123});", stores),
-    sprintf("console.log('%s');", stores),
     collapse = " "
   )
 
-  tags$script(htmltools::HTML(
-    sprintf(
-      "document.addEventListener('alpine:init', () => { %s })",
-      registry
-    )
-  ))
+  tags$head(
+    tags$script(htmltools::HTML(
+      sprintf(
+        "document.addEventListener('alpine:init', () => { %s })",
+        registry
+      )
+    ))
+  )
 }
 
 
@@ -87,12 +88,12 @@ get_alpine_plugin_dep <- function(plugin_name) {
 }
 
 
-get_bridge_dep <- function() {
+get_sherpa_js_dep <- function() {
   htmltools::htmlDependency(
-    name = "alpine-shiny-bridge",
+    name = "sherpa",
     version = "0.0.1",
     src = c(file = system.file("js", package = "sherpa")),
-    script = "alpine-shiny-bridge.js"
+    script = "sherpa.js"
   )
 }
 

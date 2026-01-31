@@ -26,7 +26,7 @@ There are 3 ways to make \link[shiny:reexports]{shiny::tags} treat the sherpa at
 as HTML-attributes:
 \itemize{
 \item \code{splice} them into the function call using \link[rlang:splice-operator]{rlang::splice-operator} \verb{!!!}
-\item add them using \code{\link{\%s\%}}, a wrapper for \link[shiny:reexports]{shiny::tagAppendAttributes}
+\item add them using \link{sherpa_operator}, a wrapper for \link[shiny:reexports]{shiny::tagAppendAttributes}
 that automatically splices sherpa attribute helpers
 \item using this "tag proxy". It proxies the \code{shiny::tags}-Object but adds
 automatic splicing for sherpa attribute helpers.
