@@ -61,7 +61,7 @@ a single Element. By default, <a href="https://rdrr.io/pkg/shiny/man/reexports.h
 lists as regular tag content instead of HTML-Attributes (which we want).</p>
 <p>There are 3 ways to make <a href="https://rdrr.io/pkg/shiny/man/reexports.html" class="external-link">shiny::tags</a> treat the sherpa attribute helpers
 as HTML-attributes:</p><ul><li><p><code>splice</code> them into the function call using <a href="https://rlang.r-lib.org/reference/splice-operator.html" class="external-link">rlang::splice-operator</a> <code>!!!</code></p></li>
-<li><p>add them using <code><a href="sherpa_operator.html">%s%</a></code>, a wrapper for <a href="https://rdrr.io/pkg/shiny/man/reexports.html" class="external-link">shiny::tagAppendAttributes</a>
+<li><p>add them using <a href="sherpa_operator.html">sherpa_operator</a>, a wrapper for <a href="https://rdrr.io/pkg/shiny/man/reexports.html" class="external-link">shiny::tagAppendAttributes</a>
 that automatically splices sherpa attribute helpers</p></li>
 <li><p>using this "tag proxy". It proxies the <code><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">shiny::tags</a></code>-Object but adds
 automatic splicing for sherpa attribute helpers.</p></li>

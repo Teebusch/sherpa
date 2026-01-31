@@ -22,3 +22,7 @@ x_trap(expression, inertia = FALSE, noscroll = FALSE)
 - noscroll:
 
   Logical, if TRUE, prevents scrolling when focus is trapped
+
+## See also
+
+<https://alpinejs.dev/plugins/focus>

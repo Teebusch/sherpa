@@ -17,3 +17,7 @@ x_intersect(expression, once = FALSE)
 - once:
 
   Logical, if TRUE, only trigger the first time
+
+## See also
+
+<https://alpinejs.dev/plugins/intersect>

@@ -35,7 +35,7 @@ sherpa attribute helpers as HTML-attributes:
   `!!!`
 
 - add them using
-  [`%s%`](https://teebusch.github.io/sherpa/reference/sherpa_operator.md),
+  [sherpa_operator](https://teebusch.github.io/sherpa/reference/sherpa_operator.md),
   a wrapper for
   [shiny::tagAppendAttributes](https://rdrr.io/pkg/shiny/man/reexports.html)
   that automatically splices sherpa attribute helpers

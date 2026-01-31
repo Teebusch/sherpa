@@ -1,6 +1,6 @@
 # Loop Through Data (x-for)
 
-Elements inside an x-for must be wrapped in a tag.
+Elements inside an x-for must be wrapped in a `<template>` tag.
 
 ## Usage
 

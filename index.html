@@ -59,7 +59,13 @@
 </div>
 <!-- badges: start -->
 
-<p><strong>sherpa</strong> carries your data between <strong>R Shiny</strong> and <strong>Alpine.js</strong>. It lets you build highly reactive user interfaces by synchronizing reactive values between a Shiny backend and an Alpine.js Frontend. This lets you handle UI-state and transitions in the browser while keeping your business logic in R.</p>
+<p><strong>sherpa</strong> carries your data between <strong>R Shiny</strong> and <strong>Alpine.js</strong>. It lets you build highly reactive user interfaces by synchronizing reactive values between a Shiny backend and an Alpine.js Frontend.</p>
+<div class="section level2">
+<h2 id="why-alpinejs">Why Alpine.js?<a class="anchor" aria-label="anchor" href="#why-alpinejs"></a>
+</h2>
+<p><a href="https://alpinejs.dev/" class="external-link">Alpine.js</a> is a rugged, minimal framework for composing behavior directly in your markup. It is the perfect partner for Shiny because it is great at handling the “last mile” of the user experience and it integrates nicely into Shiny and the Shiny development workflow.</p>
+<p>In a standard Shiny app, the server often manages micro-interactions and things like disabling a button or hiding an element can be surprisingly cumbersome to implement. Sherpa’s goal is to take some of that weight from Shiny’s shoulders, so Shiny can do what it does best: heavy-duty data processing, complex business logic, and deep integration with the R ecosystem while Alpine.js handles the “fast-twitch” reflexes: UI state, smooth transitions, and client-side interactions that happen at the speed of thought.</p>
+</div>
 <div class="section level2">
 <h2 id="key-features">Key Features<a class="anchor" aria-label="anchor" href="#key-features"></a>
 </h2>
@@ -67,6 +73,7 @@
 <li><p>✅ Synced Stores: Create a store in R with store(). It behaves like a native reactiveValues list but automatically mirrors its state to Alpine.js in the browser.</p></li>
 <li><p>✅ Bi-Directional Sync: Change a value in R, and the UI updates. Change a value in Alpine (via x-model or logic), and R sees the change immediately.</p></li>
 <li><p>✅ R-Native Directives: All core Alpine.js directives (<code>x-data</code>, <code>x-model</code>, <code>x-for</code>, etc.) and some of the official plugins available as standard R functions with support for modifiers and optional arguments. Gives you a sense of IntelliSense when writing Alpine Directives in Shiny UI Code. Directive helpers are complemented by <code>s$</code>, a “Sherpa-aware” version of <code><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">shiny::tags</a></code> that automatically handles Alpine directive helpers without the need for backticks or the <code>!!!</code> splice-operator.</p></li>
+<li><p>✅ Support for HTML-Templates, so you can write your Alpine.js code in an HTML file and leverage the power of IntelliSense. Plus: there’s an experimental Live-Server with HMR, that renders your changes instantly while maintaining the current state.</p></li>
 <li><p>📋 TODO: Auto-Binding: Automatically handles Shiny input/output binding for dynamically generated Alpine content.</p></li>
 <li><p>📋 TODO: Supports Alpine.js Plugins, with special accomodations for Alpine AJAX</p></li>
 <li><p>📋 TODO: Examples of Sherpa in use</p></li>

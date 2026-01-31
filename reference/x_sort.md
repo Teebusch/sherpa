@@ -18,3 +18,7 @@ x_sort(group = NULL, handle = NULL)
 - handle:
 
   Optional selector for a drag handle (e.g., '.drag-handle')
+
+## See also
+
+<https://alpinejs.dev/plugins/sort>

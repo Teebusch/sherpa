@@ -18,3 +18,7 @@ x_collapse(duration = NULL, min = NULL)
 - min:
 
   Optional minimum height (e.g., "50px")
+
+## See also
+
+<https://alpinejs.dev/plugins/collapse>

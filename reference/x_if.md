@@ -1,6 +1,6 @@
 # Conditional Rendering (x-if)
 
-Elements inside an x-if must be wrapped in a tag.
+Elements inside an x-if must be wrapped in a `<template>` tag.
 
 ## Usage
 

@@ -22,3 +22,7 @@ x_anchor(ref, pivot = NULL, offset = NULL)
 - offset:
 
   Offset in pixels
+
+## See also
+
+<https://alpinejs.dev/plugins/anchor>

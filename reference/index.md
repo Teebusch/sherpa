@@ -80,3 +80,10 @@ Add alpine directive attributes to HTML-Tags
   : Apply CSS Transitions
 - [`x_trap()`](https://teebusch.github.io/sherpa/reference/x_trap.md) :
   Alpine.js Focus Trap Directive
+
+## HTML-Templates
+
+- [`html_template()`](https://teebusch.github.io/sherpa/reference/html_template.md)
+  : Create a Sherpa UI from an HTML Template
+- [`watch()`](https://teebusch.github.io/sherpa/reference/watch.md) :
+  Activate Hot Module Reloading for a HTML-Template

@@ -18,3 +18,7 @@ x_mask(mask, quote = TRUE)
 - quote:
 
   Logical, if TRUE, wraps the mask in single quotes (needed for strings)
+
+## See also
+
+<https://alpinejs.dev/plugins/mask>

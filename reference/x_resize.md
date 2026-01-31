@@ -14,3 +14,7 @@ x_resize(expression)
 - expression:
 
   The JS code to run when resized
+
+## See also
+
+<https://alpinejs.dev/plugins/resize>
