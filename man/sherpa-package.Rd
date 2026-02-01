@@ -4,11 +4,11 @@
 \name{sherpa-package}
 \alias{sherpa}
 \alias{sherpa-package}
-\title{sherpa: A lightweight bridge between R Shiny and Alpine.js}
+\title{sherpa: Carries your data between Shiny and Alpine.js}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Sherpa allows you to build highly reactive user interfaces by handling state and transitions in the browser while keeping your business logic in R.
+Sherpa is a bridge between Shiny and Alpine.js. It mirrors Shiny reactiveValues in an Alpine.js store in the browser and provides helpers for adding Alpine.js directives to Shiny UI tags.
 }
 \seealso{
 Useful links:
@@ -20,7 +20,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Tobias Busch \email{teebusch@gmail.com}
+\strong{Maintainer}: Tobias Busch \email{teebusch@gmail.com} [copyright holder]
 
 }
 \keyword{internal}

@@ -16,7 +16,7 @@
 #' )
 #' }
 use_alpine <- function(plugins = NULL, stores = NULL) {
-  alpine_plugin_deps <- purrr::map(plugins, get_alpine_plugin_dep)
+  alpine_plugin_deps <- lapply(plugins, get_alpine_plugin_dep)
   set_active_plugins(plugins)
 
   htmltools::tagList(

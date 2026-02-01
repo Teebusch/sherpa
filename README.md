@@ -9,9 +9,9 @@
 
 ## Why Alpine.js?
 
-[Alpine.js](https://alpinejs.dev/) is a rugged, minimal framework for composing behavior directly in your markup. It is the perfect partner for Shiny because it is great at handling the "last mile" of the user experience and it integrates nicely into Shiny and the Shiny development workflow.
+[Alpine.js](https://alpinejs.dev/) is a rugged, minimal framework for composing behavior directly in your markup. It is the perfect partner for Shiny because it is great at handling the "last mile" of the user experience and integrates nicely into Shiny and the Shiny development workflow. Alpine is a lightweight dependency that does not require a build step or any kind of tooling. It's there when you need it but doesn't try to take center stage. It gives you "just enough JavaScript". 
 
-In a standard Shiny app, the server often manages micro-interactions and things like disabling a button or hiding an element can be surprisingly cumbersome to implement. Sherpa's goal is to take some of that weight from Shiny's shoulders, so Shiny can do what it does best: heavy-duty data processing, complex business logic, and deep integration with the R ecosystem while Alpine.js handles the "fast-twitch" reflexes: UI state, smooth transitions, and client-side interactions that happen at the speed of thought.
+In a standard Shiny app, the server often manages micro-interactions and things like disabling a button or toggling a class can be surprisingly cumbersome to implement. Sherpa's goal is to take some of that weight from Shiny's shoulders, so Shiny can do what it does best: heavy-duty data processing, complex business logic, and deep integration with the R ecosystem while Alpine.js handles the "fast-twitch" reflexes: UI state, smooth transitions, and client-side interactions that happen at the speed of thought.
 
 ## Key Features
 
