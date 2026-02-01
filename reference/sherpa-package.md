@@ -1,8 +1,8 @@
-# sherpa: A lightweight bridge between R Shiny and Alpine.js
+# sherpa: Carries your data between Shiny and Alpine.js
 
-Sherpa allows you to build highly reactive user interfaces by handling
-state and transitions in the browser while keeping your business logic
-in R.
+Sherpa is a bridge between Shiny and Alpine.js. It mirrors Shiny
+reactiveValues in an Alpine.js store in the browser and provides helpers
+for adding Alpine.js directives to Shiny UI tags.
 
 ## See also
 
@@ -16,4 +16,4 @@ Useful links:
 
 ## Author
 
-**Maintainer**: Tobias Busch <teebusch@gmail.com>
+**Maintainer**: Tobias Busch <teebusch@gmail.com> \[copyright holder\]

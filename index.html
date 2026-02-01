@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>A lightweight bridge between R Shiny and Alpine.js • sherpa</title>
+<title>Carries your data between Shiny and Alpine.js • sherpa</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -15,9 +15,9 @@
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="A lightweight bridge between R Shiny and Alpine.js">
-<meta name="description" content="Sherpa allows you to build highly reactive user interfaces by handling state and transitions in the browser while keeping your business logic in R.">
-<meta property="og:description" content="Sherpa allows you to build highly reactive user interfaces by handling state and transitions in the browser while keeping your business logic in R.">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Carries your data between Shiny and Alpine.js">
+<meta name="description" content="Sherpa is a bridge between Shiny and Alpine.js. It mirrors Shiny reactiveValues in an Alpine.js store in the browser and provides helpers for adding Alpine.js directives to Shiny UI tags.">
+<meta property="og:description" content="Sherpa is a bridge between Shiny and Alpine.js. It mirrors Shiny reactiveValues in an Alpine.js store in the browser and provides helpers for adding Alpine.js directives to Shiny UI tags.">
 <meta property="og:image" content="https://teebusch.github.io/sherpa/logo.png">
 </head>
 <body>
@@ -63,8 +63,8 @@
 <div class="section level2">
 <h2 id="why-alpinejs">Why Alpine.js?<a class="anchor" aria-label="anchor" href="#why-alpinejs"></a>
 </h2>
-<p><a href="https://alpinejs.dev/" class="external-link">Alpine.js</a> is a rugged, minimal framework for composing behavior directly in your markup. It is the perfect partner for Shiny because it is great at handling the “last mile” of the user experience and it integrates nicely into Shiny and the Shiny development workflow.</p>
-<p>In a standard Shiny app, the server often manages micro-interactions and things like disabling a button or hiding an element can be surprisingly cumbersome to implement. Sherpa’s goal is to take some of that weight from Shiny’s shoulders, so Shiny can do what it does best: heavy-duty data processing, complex business logic, and deep integration with the R ecosystem while Alpine.js handles the “fast-twitch” reflexes: UI state, smooth transitions, and client-side interactions that happen at the speed of thought.</p>
+<p><a href="https://alpinejs.dev/" class="external-link">Alpine.js</a> is a rugged, minimal framework for composing behavior directly in your markup. It is the perfect partner for Shiny because it is great at handling the “last mile” of the user experience and integrates nicely into Shiny and the Shiny development workflow. Alpine is a lightweight dependency that does not require a build step or any kind of tooling. It’s there when you need it but doesn’t try to take center stage. It gives you “just enough JavaScript”.</p>
+<p>In a standard Shiny app, the server often manages micro-interactions and things like disabling a button or toggling a class can be surprisingly cumbersome to implement. Sherpa’s goal is to take some of that weight from Shiny’s shoulders, so Shiny can do what it does best: heavy-duty data processing, complex business logic, and deep integration with the R ecosystem while Alpine.js handles the “fast-twitch” reflexes: UI state, smooth transitions, and client-side interactions that happen at the speed of thought.</p>
 </div>
 <div class="section level2">
 <h2 id="key-features">Key Features<a class="anchor" aria-label="anchor" href="#key-features"></a>
@@ -350,7 +350,7 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Tobias Busch <br><small class="roles"> Author, maintainer </small>   </li>
+<li>Tobias Busch <br><small class="roles"> Author, maintainer, copyright holder </small>   </li>
 </ul>
 </div>
 
