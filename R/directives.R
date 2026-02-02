@@ -12,29 +12,30 @@ NULL
 #' @param modifiers Optional character vector of modifiers (e.g., c("prevent", "stop"))
 #' @param arg Optional argument for the directive (e.g., "click" for x-on)
 #'
-#' @return An S3 object of class `sherpa_attr` (a named list).
+#' @return An S3 object of class `sherpa_directive`. A named list with a single element,
+#'   namely a tuple of HTML attribute name and value.
 #' @export
 x_attr_builder <- function(directive, value, modifiers = NULL, arg = NULL) {
-  key <- paste0("x-", directive)
+  name <- paste0("x-", directive)
 
   if (!is.null(arg)) {
-    key <- paste0(key, ":", arg)
+    name <- paste0(name, ":", arg)
   }
 
   if (!is.null(modifiers)) {
     mods_str <- paste(modifiers, collapse = ".")
-    key <- paste0(key, ".", mods_str)
+    name <- paste0(name, ".", mods_str)
   }
 
-  res <- list(value)
-  names(res) <- key
-  structure(res, class = c("sherpa_attr", "list"))
+  out <- list()
+  out[[name]] <- value
+  structure(out, class = c("sherpa_directive", "list"))
 }
 
 #' Check if an object is a Sherpa attribute
 #' @noRd
-is_sherpa_attr <- function(x) {
-  inherits(x, "sherpa_attr")
+is_sherpa_directive <- function(x) {
+  inherits(x, "sherpa_directive")
 }
 
 # ---------------------------------------------------------
@@ -49,7 +50,7 @@ is_sherpa_attr <- function(x) {
 #'   Use `NA` to create a data-less component.
 #' @seealso <https://alpinejs.dev/directives/data>
 #' @export
-x_data <- function(data = "{}") {
+x_data <- function(data = NA) {
   x_attr_builder("data", data)
 }
 
@@ -78,6 +79,7 @@ x_show <- function(condition) {
 #' Attribute Binding
 #'
 #' Bind HTML attributes based on JavaScript expressions.
+#' Note: In Alpine, a common shorthand for this is `:`, e.g., `:class="foo"`
 #'
 #' @param attr The HTML attribute to bind (e.g., "class", "disabled", "href").
 #' @param expression JavaScript expression to evaluate.
@@ -275,21 +277,6 @@ x_change <- function(code, modifiers = NULL) {
   x_on("change", code, modifiers)
 }
 
-#' Access an Alpine Store
-#'
-#' Helper to generate the `$store` syntax for Alpine stores.
-#'
-#' @param store_id Unique ID of the store.
-#' @param prop Optional property within the store.
-#' @return A string: `$store.store_id.prop`.
-#' @export
-x_store_ref <- function(store_id, prop = NULL) {
-  if (is.null(prop)) {
-    return(sprintf("$store.%s", store_id))
-  }
-  sprintf("$store.%s.%s", store_id, prop)
-}
-
 # ---------------------------------------------------------
 # Directives for official plugins
 # ---------------------------------------------------------
@@ -422,21 +409,21 @@ x_collapse <- function(duration = NULL, min = NULL) {
 #' Re-order elements by dragging them with your mouse.
 #' Requires Plugin "Sort"
 #'
+#' @param expression Optional JS code to run when sorting (e.g. to update a store)
 #' @param group Optional group name to allow sorting between multiple lists
 #' @param handle Optional selector for a drag handle (e.g., '.drag-handle')
 #' @seealso <https://alpinejs.dev/plugins/sort>
 #' @export
-x_sort <- function(group = NULL, handle = NULL) {
+x_sort <- function(expression = NA, group = NULL, handle = NULL) {
   assert_plugin_active("sort")
 
-  directive <- "sort"
+  modifiers <- NULL
   if (!is.null(group)) {
-    directive <- paste0(directive, ".group.", group)
+    modifiers <- c(modifiers, paste0("group.", group))
   }
   if (!is.null(handle)) {
-    directive <- paste0(directive, ".handle.", handle)
+    modifiers <- c(modifiers, paste0("handle.", handle))
   }
 
-  # Usually used as x-sort on a parent container
-  x_attr_builder(directive, NA)
+  x_attr_builder("sort", expression, modifiers = modifiers)
 }

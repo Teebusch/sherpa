@@ -4,7 +4,7 @@
 \alias{x_data}
 \title{Define Alpine Component Data}
 \usage{
-x_data(data = "{}")
+x_data(data = NA)
 }
 \arguments{
 \item{data}{A JSON string (e.g., \code{"{ open: false }"}) or a store name.

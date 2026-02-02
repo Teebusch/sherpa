@@ -6,7 +6,7 @@
 #' [rlang::splice-operator] `!!!`.
 #'
 #' @details
-#' The sherpa attribute helpers all return a named list with
+#' The sherpa directive helpers all return a named list with
 #' a single Element. By default, [shiny::tags] will treat these named
 #' lists as regular tag content instead of HTML-Attributes (which we want).
 #'
@@ -23,36 +23,7 @@
 NULL
 
 
-#' Process sherpa attributes for HTML-Tags
-#' @description
-#' Looks for unnamed arguments of class 'sherpa_attr' and
-#' flattens them into the main attribute list.
-#' @noRd
-process_sherpa_attrs <- function(...) {
-  args <- list(...)
-
-  is_unnamed <- !nzchar(names(args) %||% rep("", length(args)))
-  is_sherpa <- vapply(args, function(x) inherits(x, "sherpa_attr"), logical(1))
-  to_splice <- is_unnamed & is_sherpa
-
-  if (!any(to_splice)) {
-    return(args)
-  }
-
-  # Flatten sherpa_attr objects into the main argument list
-  final_args <- list()
-  for (i in seq_along(args)) {
-    if (to_splice[i]) {
-      final_args <- c(final_args, args[[i]])
-    } else {
-      final_args <- c(final_args, args[i])
-    }
-  }
-  return(final_args)
-}
-
-
-# Pre-process the args to 'splice' sherpa_attr objects
+# Pre-process the args to 'splice' sherpa_directive objects
 # so they get added as tag attributes instead of tag content
 create_tag_proxy <- function() {
   tag_funs <- as.list(shiny::tags)
@@ -64,7 +35,7 @@ create_tag_proxy <- function() {
     s[[tag_name]] <- local({
       tn <- tag_name
       function(...) {
-        processed_args <- process_sherpa_attrs(...)
+        processed_args <- process_directives(...)
         do.call(shiny::tags[[tn]], processed_args)
       }
     })
@@ -77,6 +48,39 @@ create_tag_proxy <- function() {
 #' @rdname tag-proxy
 #' @export
 s <- create_tag_proxy()
+
+
+#' Process sherpa directives for HTML-Tags
+#' @description
+#' Looks for unnamed arguments of class 'sherpa_directive' and
+#' flattens them into the main attribute list.
+#' @noRd
+process_directives <- function(...) {
+  args <- rlang::list2(...)
+
+  is_unnamed <- !nzchar(names(args) %||% rep("", length(args)))
+  is_sherpa <- vapply(
+    args,
+    function(x) inherits(x, "sherpa_directive"),
+    logical(1)
+  )
+  to_splice <- is_unnamed & is_sherpa
+
+  if (!any(to_splice)) {
+    return(args)
+  }
+
+  # Flatten sherpa_directive objects into the main argument list
+  final_args <- list()
+  for (i in seq_along(args)) {
+    if (to_splice[i]) {
+      final_args <- c(final_args, args[[i]])
+    } else {
+      final_args <- c(final_args, args[i])
+    }
+  }
+  return(final_args)
+}
 
 
 #' Sherpa Attribute Operator
@@ -93,6 +97,6 @@ s <- create_tag_proxy()
     stop("The left side of %s% must be a shiny tag.")
   }
 
-  attrs <- process_sherpa_attrs(...)
+  attrs <- process_directives(...)
   do.call(shiny::tagAppendAttributes, c(list(tag), attrs))
 }

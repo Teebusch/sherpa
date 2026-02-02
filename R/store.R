@@ -26,11 +26,16 @@ store <- function(
 
   store <- structure(list(), state = state, class = "sherpa_store")
 
+  process <- \(x) if (inherits(x, "sherpa_magic")) x$value else x
+
   for (key in names(data)) {
-    store[[key]] <- data[[key]]
+    stored_value <- process(data[[key]])
+    #store[[key]] <- stored_value
   }
 
   state$hold_sync <- FALSE
+
+  data <- to_json(data)
 
   session$sendCustomMessage(
     "sherpa-store-init",

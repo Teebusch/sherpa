@@ -4,9 +4,11 @@
 \alias{x_sort}
 \title{Alpine.js Sort Directive}
 \usage{
-x_sort(group = NULL, handle = NULL)
+x_sort(expression = NA, group = NULL, handle = NULL)
 }
 \arguments{
+\item{expression}{Optional JS code to run when sorting (e.g. to update a store)}
+
 \item{group}{Optional group name to allow sorting between multiple lists}
 
 \item{handle}{Optional selector for a drag handle (e.g., '.drag-handle')}

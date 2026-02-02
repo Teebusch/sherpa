@@ -119,6 +119,7 @@ shinyApp(ui, server)
 | `x_text()`       | `x-text`         | Updates the inner text of an element dynamically.             |
 | `x_html()`       | `x-html`         | Updates the inner HTML of an element (use with caution).      |
 | `x_model()`      | `x-model`        | Creates two-way data binding on input elements.               |
+| `x_modelable()`  | `x-modelable`    | Expose Alpine properties as the target of x-model.            |
 | `x_show()`       | `x-show`         | Toggles visibility via CSS (display: none).                   |
 | `x_transition()` | `x-transition`   | Applies smooth CSS transitions for entries and exits.         |
 | `x_for()`        | `x-for`          | Loops over data to create elements (must use `<template>`).   |
@@ -128,23 +129,38 @@ shinyApp(ui, server)
 | `x_ref()`        | `x-ref`          | Utility for accessing DOM-Elements directly.                  |
 | `x_cloak()`      | `x-cloak`        | Hides elements until Alpine has finished loading.             |
 | `x_ignore `      | `x-cloak`        | Lets Alpine ignore an element.                                |
-| `x_modelable()`  | `x-modelable`    | Expose Alpine properties as the target of x-model.            |
 
 ### Directives from Plugins
 
-Use `use_alpine(plugins = c(<PLUGIN_NAMES>))` to activate them.
+Use `use_alpine(plugins = c(<PLUGIN_NAMES>))` to activate.
 
-| R Helper         | Alpine directive | What it does                                                  | Plugin    |
-|------------------|------------------|---------------------------------------------------------------|-----------|
-| `x_intersect()`  | `x-intersect`    | React when an element enters the viewport.                    | intersect |
-| `x_sort()`       | `x-sort`         | Re-order elements by dragging them with your mouse.           | sort      |
-| `x_collapse()`   | `x-collapse`     | Expand and collapse elements.                                 | collapse  |
-| `x_mask()`       | `x-mask`         | Automatically format input fields (phone, dates, etc.).       | mask      |
-| `x_trap()`       | `x-trap`         | Trap keyboard focus within an element (for modals).           | focus     |
-| `x_anchor()`     | `x-anchor`       | Position an element relative to another reference element.    | anchor    |
-| `x_resize()`     | `x-resize`       | Execute JavaScript whenever an element's size changes.        | resize    |
+| R Helper         | Alpine directive | What it does                                            | Plugin    |
+|------------------|------------------|---------------------------------------------------------|-----------|
+| `x_intersect()`  | `x-intersect`    | React when an element enters the viewport.              | intersect |
+| `x_sort()`       | `x-sort`         | Re-order elements by dragging them with your mouse.     | sort      |
+| `x_collapse()`   | `x-collapse`     | Expand and collapse elements.                           | collapse  |
+| `x_mask()`       | `x-mask`         | Automatically format input fields (phone, dates, etc.). | mask      |
+| `x_trap()`       | `x-trap`         | Trap keyboard focus within an element (for modals).     | focus     |
+| `x_anchor()`     | `x-anchor`       | Position element relative to a reference element.       | anchor    |
+| `x_resize()`     | `x-resize`       | Execute JavaScript whenever an element's size changes.  | resize    |
 
 
 Directive missing? Use `x_attr_builder()` to create your own.
-
 See the [Alpine Docs for more details](https://alpinejs.dev/directives/) 
+
+## Available Magics Helpers
+
+| R Helper         | Alpine Magic     | What it does                                                  |
+|------------------|------------------|---------------------------------------------------------------|
+| `s_store()`      | `$store`         | Access global Alpine stores.                                  |
+
+### Magics from Plugins
+
+Use `use_alpine(plugins = c(<PLUGIN_NAMES>))` to activate.
+
+| R Helper       | Alpine Magic        | What it does                                       | Plugin  |
+|----------------|---------------------|----------------------------------------------------|---------|
+| `s_persist()`  | `$persist`          | persist Alpine state across page loads             | persist |
+
+
+See the [Alpine Docs for more details](https://alpinejs.dev/magics/) 

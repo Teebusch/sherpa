@@ -22,12 +22,37 @@ class Sherpa {
   /**
    * Creates an Alpine store and sets up reactive effects for bi-sync.
    */
-  createStore(storeId, data) {
-    Alpine.store(storeId, data);
+  createStore(storeId, rawData) {
+    const processedData = {};
+
+    Object.keys(rawData).forEach(key => {
+        const item = rawData[key];
+        console.log(item)
+        if (item !== null && typeof item === 'object' && item?.__sherpa_config?.is_persistent) {
+            let p = Alpine.$persist(item.value);
+
+            if (item.__sherpa_config.as) {
+                p = p.as(item._sherpa_config.as);
+            }
+            if (item.__sherpa_config.using) {
+                const strategy = item._sherpa_config.using;
+                if (Alpine[strategy]) {
+                    p = p.using(Alpine[strategy]);
+                } else {
+                    console.warn(`Alpine strategy "${strategy}" not found.`);
+                }
+            }
+            processedData[key] = p;
+        } else {
+            processedData[key] = item;
+        }
+    });
+
+    Alpine.store(storeId, processedData);
     const store = Alpine.store(storeId);
 
     // Register effects for each key we want to sync to R
-    Object.keys(data).forEach(key => {
+    Object.keys(processedData).forEach(key => {
       // Alpine.effect automatically tracks dependencies.
       // Whenever store[key] changes, this block re-runs.
       Alpine.effect(() => {

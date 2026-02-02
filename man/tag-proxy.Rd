@@ -18,7 +18,7 @@ These wrappers automatically handle sherpa attribute helpers
 \link[rlang:splice-operator]{rlang::splice-operator} \verb{!!!}.
 }
 \details{
-The sherpa attribute helpers all return a named list with
+The sherpa directive helpers all return a named list with
 a single Element. By default, \link[shiny:reexports]{shiny::tags} will treat these named
 lists as regular tag content instead of HTML-Attributes (which we want).
 

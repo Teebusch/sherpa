@@ -16,9 +16,7 @@ ui <- fluidPage(
 
   s$div(
     class = "container py-5",
-    x_data(
-      "{ show_form: false, phone: '', items: ['Pizza', 'Tacos', 'Sushi'] }"
-    ),
+    x_data("{ show_form: false, phone: '', items: ['Pizza', 'Tacos', 'Sushi'] }"),
 
     s$h1("Sherpa Plugin Kitchen Sink"),
     s$hr(),

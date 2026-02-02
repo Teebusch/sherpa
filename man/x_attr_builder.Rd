@@ -16,7 +16,8 @@ x_attr_builder(directive, value, modifiers = NULL, arg = NULL)
 \item{arg}{Optional argument for the directive (e.g., "click" for x-on)}
 }
 \value{
-An S3 object of class \code{sherpa_attr} (a named list).
+An S3 object of class \code{sherpa_directive}. A named list with a single element,
+namely a tuple of HTML attribute name and value.
 }
 \description{
 Helper to construct Alpine.js attributes

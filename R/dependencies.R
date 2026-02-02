@@ -116,7 +116,7 @@ assert_plugin_active <- function(plugin) {
     caller_name <- rlang::call_name(sys.call(-1))
 
     cli::cli_warn(c(
-      "!" = "Helper {.fn {caller_name}} requires the {.val {plugin}} plugin.",
+      "!" = "{.fn {caller_name}} requires the Alpine.js plugin {.val {plugin}}.",
       "i" = "Please add it to your UI: {.code use_alpine(plugins = '{plugin}')}"
     ))
   }

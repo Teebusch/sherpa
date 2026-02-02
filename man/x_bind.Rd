@@ -15,6 +15,7 @@ x_bind(attr, expression, modifiers = NULL)
 }
 \description{
 Bind HTML attributes based on JavaScript expressions.
+Note: In Alpine, a common shorthand for this is \code{:}, e.g., \verb{:class="foo"}
 }
 \seealso{
 \url{https://alpinejs.dev/directives/bind}

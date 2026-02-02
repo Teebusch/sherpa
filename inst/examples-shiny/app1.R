@@ -68,11 +68,11 @@ ui <- fluidPage(
       s$div(
         class = "alert alert-info",
         s$strong("Status: "),
-        s$span(x_text(x_store_ref("appData", "status"))),
+        s$span(x_text(s_store("appData", "status"))),
         s$br(),
         s$small(
           "Current Server Time: ",
-          s$span(x_text(x_store_ref("appData", "time")))
+          s$span(x_text(s_store("appData", "time")))
         )
       )
     ),
